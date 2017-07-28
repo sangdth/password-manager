@@ -1,0 +1,29 @@
+{
+  "name": "password-manager",
+  "version": "1.0.0",
+  "description": "simple password manager",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sangdth/password-manager.git"
+  },
+  "keywords": [
+    "simple",
+    "password",
+    "manager",
+    "html/css"
+  ],
+  "author": "Sang and Viet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sangdth/password-manager/issues"
+  },
+  "homepage": "https://github.com/sangdth/password-manager#readme",
+  "dependencies": {
+    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap-switch": "^3.3.4"
+  }
+}
