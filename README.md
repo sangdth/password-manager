@@ -1,6 +1,6 @@
-# Project Title
+# Password Manager
 
-Password Manager
+Simple HTML/CSS password manager.
 
 ## Getting Started
 
