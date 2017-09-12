@@ -32,8 +32,8 @@ Vue.component('password-list', {
         <td>{{ record.password }}</td>
         <td>{{ record.note }}</td>
         <td>
-            <a class="button is-small is-outline" rel="tooltip " title="Edit " data-placement="top " href="# "><i class="fa fa-pencil fa-lg "></i></a>
-            <a class="button is-small is-outline " rel="tooltip " title="Delete " data-placement="top " href="# "><i class="fa fa-trash-o fa-lg "></i></a>
+            <a class="button is-small is-outline tooltip" data-tooltip="Edit" data-placement="top" href="# "><i class="fa fa-pencil fa-lg "></i></a>
+            <a class="button is-small is-outline tooltip" data-tooltip="Delete" data-placement="top" href="# "><i class="fa fa-trash-o fa-lg "></i></a>
         </td>
       </tr>
     </tbody>
@@ -98,7 +98,7 @@ new Vue({
   el: '#root',
 
   data: {
-    msg: 'Hello this is Vue!',
+    msg: 'Hi, search your passwords here',
   }
 
 });

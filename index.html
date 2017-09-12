@@ -24,55 +24,65 @@
 </head>
 
 <body>
-  <nav class="navbar" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="#home">
-        <span class="icon is-medium"><i class="fa fa-lock fa-2x"></i></span> Password Manager 2.0
-      </a>
+  <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="#home">
+          <span class="icon is-medium"><i class="fa fa-lock fa-2x"></i></span> Password Manager 2.0
+        </a>
 
-      <button class="button navbar-burger">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        <button class="button navbar-burger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </div>
+    
     
   </nav>
   <!-- End Navbar -->
 
   <section id="root" class="section">
-      <div class="container">
-        <div class="columns">
-          <div class="column is-half">
-            <form class="form">
-              <div class="field">
-                <div class="control">
-                  <input class="input is-large" type="text" :placeholder="msg">
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="column is-half">
-            <!-- input type="checkbox" name="checkbox" class="bootstrap-switch bootstrap-switch-mini" data-label-icon="icon-youtube icon-large" data-off-label="<i class='fa fa-th' aria-hidden='true'></i>" data-on-label="<i class='fa fa-list' aria-hidden='true'></i>" / -->
-
-            <a href="#button" class="button is-large is-success is-pulled-right">
-                <span class="icon">
-                  <i class="fa fa-plus"></i>
-                </span>
-                <span>ADD NEW RECORD</span>
-            </a>
-
+    <div class="container">
+      <form class="form">
+        <div class="column is-half">
+          <div class="field">
+            <div class="control">
+              <input class="input is-large" type="text" :placeholder="msg">
+            </div>
           </div>
         </div>
+        <div class="column is-half">
+        
+        </div>
+      </form>
+    </div>
+      
+      <div class="container">
         <password-list>
           <password-item id="99" account="Github" username="anh2" email="anh2@test.com" password="123456" note="lorem gitsum"></password-item>
         </password-list>
       </div>
+      
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            
+          </div>
+          <div class="column is-half">
+            <a href="#button" class="button is-large is-success is-pulled-right">
+              <span class="icon"><i class="fa fa-plus"></i></span>
+              <span>ADD NEW RECORD</span>
+            </a>
+          </div>
+        </div>
+      </div>
   </section>
   
-  <section class="section ">
-      <div class="container ">
-          <div class="button-container ">
+  <section class="section">
+      <div class="container">
+          <div class="button-container">
 
 
           </div>
