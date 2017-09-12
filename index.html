@@ -1,5 +1,4 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -11,8 +10,8 @@
     <title>Password Manager</title>
     <meta name="description" content="The HTML/CSS based password manager">
     <meta name="author" content="Sang and Viet">
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="">
+    <link rel="icon" type="image/png" href="">
 
     <!--     Font-Awesome     -->
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css" />
@@ -48,7 +47,7 @@
             <form class="form">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large" type="text" placeholder="{{ msg }}">
+                  <input class="input is-large" type="text" :placeholder="msg">
                 </div>
               </div>
             </form>
@@ -164,5 +163,4 @@
   <script src="assets/js/main.js"></script>
 
 </body>
-
 </html>

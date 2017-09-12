@@ -3,7 +3,7 @@ new Vue({
   el: '#root',
 
   data: {
-    msg: 'Hello this is Vue!';
+    msg: 'Hello this is Vue!',
   }
 
 });
