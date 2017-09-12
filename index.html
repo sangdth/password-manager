@@ -56,63 +56,17 @@
             <!-- input type="checkbox" name="checkbox" class="bootstrap-switch bootstrap-switch-mini" data-label-icon="icon-youtube icon-large" data-off-label="<i class='fa fa-th' aria-hidden='true'></i>" data-on-label="<i class='fa fa-list' aria-hidden='true'></i>" / -->
 
             <a href="#button" class="button is-large is-success is-pulled-right">
-                <i class="fa fa-plus" aria-hidden="true"></i> ADD NEW RECORD
+                <span class="icon">
+                  <i class="fa fa-plus"></i>
+                </span>
+                <span>ADD NEW RECORD</span>
             </a>
 
           </div>
         </div>
-
-        <table class="table is-bordered is-fullwidth">
-          <thead>
-            <tr>
-                <th>#</th>
-                <th>Account</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Action</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-                <th>#</th>
-                <th>Account</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Action</th>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Google</td>
-                <td>sangdth</td>
-                <td>sangdth@gmail.com</td>
-                <td>*****</td>
-                <td>
-                    <a class="btn-action " rel="tooltip " title="Edit " data-placement="top " href="# "><i class="fa fa-pencil-square fa-lg "></i></a>
-                    <a class="btn-action " rel="tooltip " title="Delete " data-placement="top " href="# "><i class="fa fa-trash-o fa-lg "></i></a>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row ">2</th>
-                <td>Facebook</td>
-                <td>sangdth</td>
-                <td>sangdth@facebook.com</td>
-                <td>*****</td>
-                <td>*****</td>
-            </tr>
-            <tr>
-                <th scope="row ">3</th>
-                <td>Twitter</td>
-                <td>sangdth</td>
-                <td>sangdth@twitter.com</td>
-                <td>*****</td>
-                <td>*****</td>
-            </tr>
-          </tbody>
-        </table>
+        <password-list>
+          <password-item id="99" account="Github" username="anh2" email="anh2@test.com" password="123456" note="lorem gitsum"></password-item>
+        </password-list>
       </div>
   </section>
   
@@ -157,7 +111,7 @@
 
 
   <!--   Core JS Files   -->
-  <script src="https://unpkg.com/vue@2.4.2/dist/vue.js"></script>
+  <script src="node_modules/vue/dist/vue.min.js"></script>
 
   <!-- Custom script for other stuff -->
   <script src="assets/js/main.js"></script>

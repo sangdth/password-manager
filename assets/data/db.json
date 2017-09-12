@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "account": "Google",
+    "username": "sangdth",
+    "email": "sangdth@gmail.com",
+    "password": "12345678",
+    "note": "lorem ipsum"
+  },
+  {
+    "id": 2,
+    "account": "Facebook",
+    "username": "sangdth",
+    "email": "sangdth@me.com",
+    "password": "12345678",
+    "note": "facebook ipsum"
+  },
+  {
+    "id": 3,
+    "account": "Apple",
+    "username": "sangdth",
+    "email": "sangdth@me.com",
+    "password": "12345678",
+    "note": "apple ipsum"
+  },
+  {
+    "id": 4,
+    "account": "Twitter",
+    "username": "sangdth",
+    "email": "sangdth@gmail.com",
+    "password": "12345678",
+    "note": "twitter ipsum"
+  }
+]
