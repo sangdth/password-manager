@@ -1,6 +1,6 @@
 {
   "name": "password-manager",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "simple password manager",
   "main": "index.html",
   "scripts": {
@@ -23,7 +23,8 @@
   },
   "homepage": "https://github.com/sangdth/password-manager#readme",
   "dependencies": {
-    "bootstrap": "^4.0.0-alpha.6",
-    "bootstrap-switch": "^3.3.4"
+    "bulma": "^0.5.2",
+    "font-awesome": "^4.7.0",
+    "vue": "^2.4.2"
   }
 }
