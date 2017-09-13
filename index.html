@@ -93,7 +93,6 @@
       <table class="table is-bordered is-fullwidth">
         <thead>
           <tr>
-            <th>#</th>
             <th>Account</th>
             <th>Username</th>
             <th>Email</th>
@@ -104,7 +103,6 @@
         </thead>
         <tfoot>
           <tr>
-            <th>#</th>
             <th>Account</th>
             <th>Username</th>
             <th>Email</th>
@@ -113,14 +111,15 @@
             <th>Action</th>
           </tr>
         </tfoot>
-        <tr is="password-row" v-for="record in database" v-bind:key="record.id"
-          v-bind:id="record.id"
+        <tr is="password-row" v-for="(record, index) in database" v-bind:key="index"
           v-bind:account="record.account"
           v-bind:username="record.username"
           v-bind:email="record.email"
           v-bind:password="record.password"
           v-bind:used="record.used"
-          v-bind:note="record.note"    
+          v-bind:note="record.note" 
+          @remove="delRow(index)"
+             
         ></tr>
       </table>
       

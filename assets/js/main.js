@@ -2,7 +2,6 @@ Vue.component('password-row', {
   props: ['id', 'account', 'username', 'email', 'password', 'used', 'note'],
   template: `
       <tr>
-        <th>{{ id }}</th>
         <td>{{ account }}</td>
         <td>{{ username }}</td>
         <td>{{ email }}</td>
@@ -13,7 +12,12 @@ Vue.component('password-row', {
           <a class="button is-small is-outline tooltip" @click="delRow(id)" data-tooltip="Delete" data-placement="top" href="#delete"><i class="fa fa-trash-o fa-lg"></i></a>
         </td>
       </tr>
-  `
+  `,
+  methods: {
+    delRow: function() {
+      this.$emit('remove');
+    }
+  }
 });
 
 new Vue({
@@ -21,7 +25,6 @@ new Vue({
 
   data: {
     msg: 'Hi, search your passwords here',
-    id: '',
     inAccount: '',
     inUsername: '',
     inEmail:'',
@@ -83,8 +86,9 @@ new Vue({
         used: 0
       })
     },
-    delRow: function(id) {
-      
+    
+    delRow: function(index) {
+      this.database.splice(index, 1);
     }
   }
 
