@@ -19,78 +19,176 @@
     <!-- Bulma and custom css -->
     <link href="node_modules/bulma/css/bulma.css" rel="stylesheet" />
     <link href="assets/css/custom.css" rel="stylesheet" />
-
-
 </head>
 
 <body>
-  <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
-    <div class="container">
-      <div class="navbar-brand">
-        <a class="navbar-item" href="#home">
-          <span class="icon is-medium"><i class="fa fa-lock fa-2x"></i></span> Password Manager 2.0
-        </a>
+  <div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="#home">
+            <span class="has-text-weight-bold is-size-5">Password Manager 2.0</span>
+          </a>
 
-        <button class="button navbar-burger">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+          <button class="button navbar-burger">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div> <!-- Navbar Brand -->
+        
+        <div class="navbar-end">
+          
+        
+        <div class="navbar-item">
+          <div class="field is-grouped">
+            <p class="control">
+              <a class="button is-dark is-outlined" href="#">
+                <span class="icon">
+                  <i class="fa fa-cog"></i>
+                </span>
+                <span>Settings</span>
+              </a>
+            </p>
+          </div>
+        </div>
       </div>
-    </div>
-    
-    
-  </nav>
-  <!-- End Navbar -->
+    </nav>
+    <!-- End Navbar -->
+  </div>
+  
 
   <section id="root" class="section">
+    
     <div class="container">
-      <form class="form">
+      <div class="columns">
+        
         <div class="column is-half">
           <div class="field">
             <div class="control">
               <input class="input is-large" type="text" :placeholder="msg">
             </div>
           </div>
-        </div>
-        <div class="column is-half">
+        </div>  <!-- End half -->
         
-        </div>
-      </form>
+        <div class="column is-half">
+          <a href="#button" class="button is-large is-dark">
+            <span class="icon"><i class="fa fa-sort-alpha-asc"></i></span>
+          </a>
+          
+          <a href="#button" class="button is-large is-light">
+            <span class="icon"><i class="fa fa-sort-amount-desc"></i></span>
+          </a>
+          
+        </div> <!-- End half -->
+      </div> <!-- End columns -->
+    </div> <!-- End container -->
+    
+    <br>
+    
+    <div class="container">
+      <table class="table is-bordered is-fullwidth">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Account</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Note</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>#</th>
+            <th>Account</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Note</th>
+            <th>Action</th>
+          </tr>
+        </tfoot>
+        <tr is="password-row" v-for="record in database" v-bind:key="record.id"
+          v-bind:id="record.id"
+          v-bind:account="record.account"
+          v-bind:username="record.username"
+          v-bind:email="record.email"
+          v-bind:password="record.password"
+          v-bind:used="record.used"
+          v-bind:note="record.note"    
+        ></tr>
+      </table>
+      
     </div>
-      
-      <div class="container">
-        <password-list>
-          <password-item id="99" account="Github" username="anh2" email="anh2@test.com" password="123456" note="lorem gitsum"></password-item>
-        </password-list>
-      </div>
-      
-      <div class="container">
-        <div class="columns">
-          <div class="column is-half">
+    
+    <div class="container">
+      <div class="columns">
+        <div class="column"> <!-- Inputs -->
+          <div class="columns">
+            
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <input class="input is-large"  type="text" placeholder="Account">
+                </div>
+              </div>
+            </div>
+            
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <input class="input is-large"  type="text" placeholder="Username">
+                </div>
+              </div>
+            </div>
+            
+            <div class="column is-one-third">
+              <div class="field">
+                <div class="control">
+                  <input class="input is-large"  type="text" placeholder="Email">
+                </div>
+              </div>
+            </div>
+            
+            <div class="column">
+              <div class="field">
+                <div class="control">
+                  <input class="input is-large"  type="text" placeholder="Password">
+                </div>
+              </div>
+            </div>
             
           </div>
-          <div class="column is-half">
-            <a href="#button" class="button is-large is-success is-pulled-right">
-              <span class="icon"><i class="fa fa-plus"></i></span>
-              <span>ADD NEW RECORD</span>
-            </a>
-          </div>
+        </div>
+        
+        <div class="column is-2">
+          <a href="#button" class="button is-large is-success is-pulled-right">
+            <span class="icon"><i class="fa fa-plus"></i></span>
+            <span>Add Account</span>
+          </a>
         </div>
       </div>
+    </div>
   </section>
   
-  <section class="section">
+  <section class="hero is-medium is-light is-bold">
+    <div class="hero-body">
       <div class="container">
-          <div class="button-container">
-
-
-          </div>
-          <h3 class="title ">About Password Manager</h3>
-        
-          <h5 class="description ">Simple HTML/CSS application to control passwords in easy way.</h5>
-
+          <h1 class="title">About Password Manager</h1>
+          <h2 class="subtitle">Simple HTML/CSS application to control passwords in easy way.</h2>
+          <a class="is-hidden-desktop-only" href="#" target="_blank">
+            <span class="icon">
+              <i class="fa fa-2x fa-github"></i>
+            </span>
+          </a>
+          <a class="is-hidden-desktop-only" href="#" target="_blank">
+            <span class="icon is-medium">
+              <i class="fa fa-2x fa-twitter"></i>
+            </span>
+          </a>
       </div>
+    </div>
   </section>
   
   <footer class="footer footer-default ">
