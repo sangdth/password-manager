@@ -9,8 +9,8 @@ Vue.component('password-row', {
         <td>{{ password }} <span class="tag is-light is-pulled-right">{{ used }}</span></td>
         <td>{{ note }}</td>
         <td>
-          <a class="button is-small is-outline tooltip" data-tooltip="Edit" data-placement="top" href="# "><i class="fa fa-pencil fa-lg"></i></a>
-          <a class="button is-small is-outline tooltip" data-tooltip="Delete" data-placement="top" href="# "><i class="fa fa-trash-o fa-lg"></i></a>
+          <a class="button is-small is-outline tooltip" data-tooltip="Edit" data-placement="top" href="#"><i class="fa fa-pencil fa-lg"></i></a>
+          <a class="button is-small is-outline tooltip" @click="delRow(id)" data-tooltip="Delete" data-placement="top" href="#delete"><i class="fa fa-trash-o fa-lg"></i></a>
         </td>
       </tr>
   `
@@ -21,6 +21,11 @@ new Vue({
 
   data: {
     msg: 'Hi, search your passwords here',
+    id: '',
+    inAccount: '',
+    inUsername: '',
+    inEmail:'',
+    inPassword: '',
     database: [
       {
         id: 1,
@@ -60,5 +65,27 @@ new Vue({
       }
     ],
   },
+  
+  computed: {
+    currentIndex: function() {
+       return this.database.length;
+     }
+  },
+  
+  methods: {
+    addRow: function() {
+      this.database.push({
+        id: this.currentIndex += 1,
+        account: this.inAccount,
+        username: this.inUsername,
+        email: this.inEmail,
+        password: this.inPassword,
+        used: 0
+      })
+    },
+    delRow: function(id) {
+      
+    }
+  }
 
 });
