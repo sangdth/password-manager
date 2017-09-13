@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/sangdth/password-manager#readme",
   "dependencies": {
+    "axios": "^0.16.2",
     "bulma": "^0.5.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
