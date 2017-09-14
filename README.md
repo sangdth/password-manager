@@ -1,21 +1,22 @@
-# dcmvue
+# password-manager
 
-> A Vue.js project
+> Simple password manager application built on VueJS and Electron
 
-## Build Setup
+#### Build Setup
 
 ``` bash
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve with hot reload at localhost:9080
 npm run dev
 
-# build for production with minification
+# build electron application for production
 npm run build
 
-# build for production and view the bundle analyzer report
-npm run build --report
+
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+---
+
+This project was generated with [electron-vue](https://github.com/SimulatedGREG/electron-vue) using [vue-cli](https://github.com/vuejs/vue-cli). Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
