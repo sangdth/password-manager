@@ -181,7 +181,8 @@
 </template>
 
 <script>
-  import PasswordRow from './PasswordTable/PasswordRow'
+  import app from 'electron';
+  import PasswordRow from './PasswordTable/PasswordRow';
 
   export default {
     name: 'password-table',
@@ -236,7 +237,7 @@
     },
 
     mounted: function() {
-      alert(this);
+      // console.log(app.getPath());
     },
     computed: {
       currentIndex: function() {
