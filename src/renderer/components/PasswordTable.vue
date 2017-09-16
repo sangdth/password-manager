@@ -83,16 +83,14 @@
                 <th>Action</th>
               </tr>
             </tfoot>
-            <tr is="password-row" v-for="(record, index) in database" v-bind:key="index"
+            <tr is="password-row" v-for="(record, index) in database" v-bind:key="index" @remove="delRow(index)"
               v-bind:account="record.account"
               v-bind:username="record.username"
               v-bind:email="record.email"
               v-bind:password="record.password"
               v-bind:used="record.used"
               v-bind:note="record.note" 
-              @remove="delRow(index)"
-                 
-            ></tr>
+              ></tr>
           </table>
         </div>  <!-- End container of table -->
       
@@ -121,7 +119,8 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" v-model="inEmail" type="text" placeholder="Email">
+                    <input class="input is-large is-narrow" :class="{'is-danger': errors.has('email') }" v-model="inEmail" v-validate="'required|email'" type="email" name="email" placeholder="Email">
+                    <p class="has-text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</p>
                   </div>
                 </div>
               </div>
