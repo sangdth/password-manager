@@ -1,6 +1,6 @@
 {
   "name": "password-manager",
-  "version": "0.0.0",
+  "version": "2.0.0",
   "author": "",
   "description": "Simple password manager application built on VueJS and Electron",
   "license": null,
@@ -17,8 +17,8 @@
     "postinstall": ""
   },
   "build": {
-    "productName": "password-manager",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "Password Manager",
+    "appId": "org.sangdth.passwordmanager",
     "directories": {
       "output": "build"
     },

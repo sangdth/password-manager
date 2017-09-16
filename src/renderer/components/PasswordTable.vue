@@ -190,6 +190,7 @@
     
     data () {
       return {
+        currentIndex: 0,
         msg: 'Hi, search your passwords here',
         inAccount: '',
         inUsername: '',
@@ -237,12 +238,12 @@
     },
 
     mounted: function() {
-      // console.log(app.getPath());
+      
     },
     computed: {
-      currentIndex: function() {
-         return this.database.length;
-       }
+      // currentIndex: function() {
+      //    return this.database.length;
+      //  }
     },
     
     methods: {
