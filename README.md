@@ -44,8 +44,6 @@ Recent years I've moved slightly to web design, then UI/UX, and last year, I fel
 
 You can do anything, mentor, find bugs, raise issue, folk, create pull request, or even drop me a message at Twitter @sangdth, you are more than welcome.
 
-I'm living in Vantaa (Finland) with two wonderful kids and beautiful wife. I'm taking care of 2 ant queens at the moment.
-
 ## License
 
 [MIT](https://github.com/electron/electron/blob/master/LICENSE)
