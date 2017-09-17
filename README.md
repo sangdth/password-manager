@@ -38,11 +38,11 @@ npm run build
 
 ## Calling for HELP! 
 
-I'm a graphic designer, but unlike many others, I never formally trained at a school. Instead, I learned my skills through observation, self-directed study and work experience from 2004.
+I'm a graphic designer [(click to see my portfolio,)](https://www.behance.net/sangdth) but unlike many others, I never formally trained at a school. Instead, I learned my skills through observation, self-directed study and work experience from 2004.
 
 Recent years I've moved slightly to web design, then UI/UX, and last year, I felt in love with NodeJS. Right now I'm still self-studying everything just by reading tutorials and online courses, so, I really need help. 
 
-You can do anything, mentor, find bugs, raise issue, folk, create pull request, or even drop me a message at Twitter @sangdth, you are more than welcome.
+You can do anything, mentor, find bugs, raise issue, folk, create pull request, or even drop me a message at Twitter [@sangdth](https://twitter.com/sangdth), you are more than welcome.
 
 ## License
 
