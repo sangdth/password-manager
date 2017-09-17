@@ -128,7 +128,7 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" v-model="inPassword" type="text" placeholder="Password">
+                    <input class="input is-large is-narrow" :class="{'is-danger': errors.has('password') }" v-model="inPassword" v-validate="'required'" name="password" type="text" placeholder="Password">
                   </div>
                 </div>
               </div>
@@ -137,7 +137,7 @@
           </div> <!-- END INPUT -->
           
           <div class="column is-narrow">
-            <a href="#add" @click="addRow" class="button is-large is-success is-pulled-right">
+            <a href="#add" @click="addRow" class="button is-large is-pulled-right" :class="addBtnClassObject">
               <span class="icon"><i class="fa fa-plus"></i></span>
               <span>Add Account</span>
             </a>
@@ -237,12 +237,22 @@
     },
 
     mounted: function() {
-      
+      //this.isReadyToAdd = false
     },
     computed: {
       // currentIndex: function() {
       //    return this.database.length;
       //  }
+      isReadyToAdd: function () {
+        // isReadyToAdd must true when all form are validated.
+      },
+      
+      addBtnClassObject: function () {
+        return {
+          'is-success': this.isReadyToAdd,
+          'is-static': !this.isReadyToAdd
+        }
+      }
     },
     
     methods: {
