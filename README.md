@@ -16,6 +16,7 @@ The application should have these features, but some of them are under developme
 - [ ] Edit item.
 - [ ] Batch edit items.
 - [x] Validation of input. (WIP)
+- [ ] Instant search.
 - [ ] Sort by alphabetical order.
 - [ ] Sort by frequent of clicks.
 - [ ] Read/write to database.
