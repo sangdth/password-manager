@@ -37,7 +37,14 @@ npm run build
 ---
 
 ## Calling for HELP! 
-I'm learning everything just by reading tutorials and online courses, so, I really need help. You can do anything, raise issue, create pull request, or even drop me a message at Twitter @sangdth, you are more than welcome.
+
+I'm a graphic designer, but unlike many others, I never formally trained at a school. Instead, I learned my skills through observation, self-directed study and work experience from 2004.
+
+Recent years I've moved slightly to web design, then UI/UX, and last year, I felt in love with NodeJS. Right now I'm still self-studying everything just by reading tutorials and online courses, so, I really need help. 
+
+You can do anything, mentor, find bugs, raise issue, folk, create pull request, or even drop me a message at Twitter @sangdth, you are more than welcome.
+
+I'm living in Vantaa (Finland) with two wonderful kids and beautiful wife. I'm taking care of 2 ant queens at the moment.
 
 ## License
 
