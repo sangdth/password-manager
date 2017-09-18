@@ -19,7 +19,7 @@
           <div class="navbar-item">
             <div class="field is-grouped">
               <p class="control">
-                <a class="button is-dark is-outlined" href="#">
+                <a class="button is-dark is-outlined" href="#" @click="openSetting">
                   <span class="icon">
                     <i class="fa fa-cog"></i>
                   </span>
@@ -45,14 +45,14 @@
             </div>  <!-- End search form -->
           
             <div class="column is-narrow">
-              <a href="#button" class="button is-large is-dark is-pulled-right">
-                <span class="icon"><i class="fa fa-sort-alpha-asc"></i></span>
+              <a href="#button" class="button is-large is-pulled-right" :class="onAtoZ ? 'is-dark' : 'is-light'" @click="toggleAtoZ">
+                <span class="icon"><i class="fa" :class="tmpAtoZ ? 'fa-sort-alpha-asc' : 'fa-sort-alpha-desc'"></i></span>
               </a>
             </div> <!-- Sort button alpha -->
           
             <div class="column is-narrow">
-              <a href="#button" class="button is-large is-light is-pulled-right">
-                <span class="icon"><i class="fa fa-sort-amount-desc"></i></span>
+              <a href="#button" class="button is-large is-pulled-right" :class="onNumber ? 'is-dark' : 'is-light'" @click="toggleNumber">
+                <span class="icon"><i class="fa" :class="tmpNumber ? 'fa-sort-amount-asc' : 'fa-sort-amount-desc'"></i></span>
               </a>
             </div>  <!-- Sort button amount -->
  
@@ -103,7 +103,9 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" v-model="inAccount" type="text" placeholder="Account">
+                    <input class="input is-large is-narrow" 
+                    v-validate="'required'" v-model="inAccount" name="account" 
+                    type="text" placeholder="Account">
                   </div>
                 </div>
               </div>
@@ -111,7 +113,9 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" v-model="inUsername" type="text" placeholder="Username">
+                    <input class="input is-large is-narrow" 
+                    v-validate="'required'" v-model="inUsername" name="username" 
+                    type="text" placeholder="Username">
                   </div>
                 </div>
               </div>
@@ -119,8 +123,10 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" :class="{'is-danger': errors.has('email') }" v-model="inEmail" v-validate="'required|email'" type="email" name="email" placeholder="Email">
-                    <p class="has-text-danger" v-show="errors.has('email')">{{ errors.first('email') }}</p>
+                    <input class="input is-large is-narrow"
+                    v-validate="'required|email'" v-model="inEmail" name="email" 
+                    type="email" placeholder="Email">
+                    
                   </div>
                 </div>
               </div>
@@ -128,7 +134,9 @@
               <div class="column">
                 <div class="field">
                   <div class="control">
-                    <input class="input is-large is-narrow" :class="{'is-danger': errors.has('password') }" v-model="inPassword" v-validate="'required'" name="password" type="text" placeholder="Password">
+                    <input class="input is-large is-narrow"
+                    v-validate="'required'" v-model="inPassword" name="password" 
+                    type="text" placeholder="Password">
                   </div>
                 </div>
               </div>
@@ -141,21 +149,22 @@
               <span class="icon"><i class="fa fa-plus"></i></span>
               <span>Add Account</span>
             </a>
+            <span v-show="fields.dirty">I'm Dirty</span>
           </div> <!-- ADD BUTTON -->
           
         </div>
       </div>
     </section>
     
-    <div class="modal">
+    <div class="modal" :class="{'is-active' : onSetting}">
       <div class="modal-background"></div>
       <div class="modal-card">
         <header class="modal-card-head">
-          <p class="modal-card-title">About Password Manager</p>
-          <button class="delete" aria-label="close"></button>
+          <p class="modal-card-title">Setting</p>
+          <button class="delete" aria-label="close" @click="closeSetting"></button>
         </header>
         <section class="modal-card-body">
-          <p>Simple HTML/CSS application to control passwords in easy way.</p>
+          <p>This is where we place the settings :D</p>
           <a class="is-hidden-desktop-only" href="#" target="_blank">
             <span class="icon">
               <i class="fa fa-2x fa-github"></i>
@@ -168,7 +177,7 @@
           </a>
         </section>
         <footer class="modal-card-foot">
-          <button class="button">Cancel</button>
+          <button class="button" @click="closeSetting">Cancel</button>
         </footer>
       </div>
     </div>
@@ -195,6 +204,11 @@
         inUsername: '',
         inEmail:'',
         inPassword: '',
+        onSetting: false,
+        tmpAtoZ: false,
+        tmpNumber: false,
+        onAtoZ: true,
+        onNumber: false,
         database: [
           {
             id: 1,
@@ -222,35 +236,34 @@
             password: '****',
             used: 14,
             note: 'twitter ipsum'
-          },
-          {
-            id: 4,
-            account: 'Github',
-            username: 'sangdth',
-            email: 'sangdth@gmail.com',
-            password: '****',
-            used: 456,
-            note: 'github ipsum'
           }
         ],
       }
     },
 
     mounted: function() {
-      //this.isReadyToAdd = false
+      
     },
+    
     computed: {
-      // currentIndex: function() {
-      //    return this.database.length;
-      //  }
-      isReadyToAdd: function () {
-        // isReadyToAdd must true when all form are validated.
+      
+      isFormHasValue: function() {
+        return Boolean(this.inAccount) && Boolean(this.inUsername)
+              && Boolean(this.inEmail) && Boolean(this.inPassword);
       },
       
-      addBtnClassObject: function () {
+      isAnyError: function() {
+        if ( !this.isFormHasValue ) {
+          return true;
+         } else {
+          return this.errors.any();
+        }
+      },
+      
+      addBtnClassObject: function() {
         return {
-          'is-success': this.isReadyToAdd,
-          'is-static': !this.isReadyToAdd
+          'is-success': !this.isAnyError,
+          'is-static': this.isAnyError
         }
       }
     },
@@ -258,17 +271,41 @@
     methods: {
       addRow: function() {
         this.database.push({
-          id: this.currentIndex += 1,
+          //id: this.currentIndex += 1,
           account: this.inAccount,
           username: this.inUsername,
           email: this.inEmail,
           password: this.inPassword,
           used: 0
-        })
+        });
+        this.inAccount = '';
+        this.inUsername = '';
+        this.inEmail = '';
+        this.inPassword = '';
       },
       
       delRow: function(index) {
         this.database.splice(index, 1);
+      },
+      
+      openSetting: function() {
+        this.onSetting = true;
+      },
+      
+      closeSetting: function() {
+        this.onSetting = false;
+      },
+      
+      toggleAtoZ: function() {
+        this.tmpAtoZ = !this.tmpAtoZ;
+        this.onAtoZ = true;
+        this.onNumber = false;
+      },
+      
+      toggleNumber: function() {
+        this.tmpNumber = !this.tmpNumber;
+        this.onAtoZ = false;
+        this.onNumber = true;
       }
     }
   }
