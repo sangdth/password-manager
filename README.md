@@ -9,18 +9,6 @@ All my passwords are 16 characters long and randomly generated from A-Z, 0-9 and
 I chose VueJS because it's easy to start, and with some basic knownledge when I've learned React, jump into VueJS is really interesting. I want to focus in VueJS, so I used the boilerplate [electron-vue](https://github.com/SimulatedGREG/electron-vue) to generate. 
 Documentation about the original structure can be found [here](https://simulatedgreg.gitbooks.io/electron-vue/content/index.html).
 
-<<<<<<< HEAD
-## Feature
-The application should have these features, but some of them are under development.
-- [x] Add new item (each item is a row of password.)
-- [x] Remove exist item.
-- [ ] Edit item.
-- [ ] Batch edit items.
-- [x] Validation of input. (WIP)
-- [ ] Instant search.
-- [ ] Sort by alphabetical order.
-- [ ] Sort by frequent of clicks.
-=======
 ## Features
 The application should have these features, but some of them are under development.
 - [x] Add new item (each item is a row of password.)
@@ -32,7 +20,6 @@ The application should have these features, but some of them are under developme
 - [ ] Instant search.
 - [x] Sort by alphabetical order.
 - [x] Sort by frequent of clicks.
->>>>>>> development
 - [ ] Read/write to database.
 - [ ] Setting: backup/restore items.
 
