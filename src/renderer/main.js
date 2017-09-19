@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import axios from 'axios';
+import VeeValidate from 'vee-validate';
 
 import App from './App';
 import router from './router';
 import store from './store';
-
-import VeeValidate from 'vee-validate';
 
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
