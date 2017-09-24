@@ -127,7 +127,9 @@
 <script>
   import app from 'electron';
   import PasswordRow from './PasswordRow';
-
+  
+  //const result = db.get('passwords').value();
+  
   export default {
     name: 'password-table',
     components: { PasswordRow },
@@ -145,35 +147,7 @@
         tmpNumber: false,
         onAtoZ: true,
         onNumber: false,
-        database: [
-          {
-            id: 1,
-            account: 'Google',
-            username: 'sangdth',
-            email: 'sangdth@gmail.com',
-            password: '****',
-            used: 3214,
-            note: ''
-          },
-          {
-            id: 2,
-            account: 'Facebook',
-            username: 'sangdth',
-            email: 'sangdth@me.com',
-            password: '****',
-            used: 762,
-            note: 'facebook ipsum'
-          },
-          {
-            id: 3,
-            account: 'Twitter',
-            username: 'sangdth',
-            email: 'sangdth@me.com',
-            password: '****',
-            used: 14,
-            note: 'twitter ipsum'
-          }
-        ],
+        database: result,
       }
     },
 
