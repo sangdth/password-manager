@@ -23,6 +23,11 @@ The application should have these features, but some of them are under developme
 - [ ] Read/write to database.
 - [ ] Setting: backup/restore items.
 
+## Work in Progress
+These are features I'm working on it:
+- [ ] Use vue-router to navigate instead of pop-up modal.
+- [ ] Find good database and intergrate into app. 
+
 ## Build Setup
 ``` bash
 # install dependencies
