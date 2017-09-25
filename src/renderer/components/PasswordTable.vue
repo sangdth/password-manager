@@ -112,32 +112,30 @@
         </div> <!-- END INPUT -->
         
         <div class="column is-narrow">
-          <a href="#add" @click="addRow" class="button is-large is-pulled-right" :class="addBtnClassObject">
+          <a @click="addRow" class="button is-large is-pulled-right" :class="addBtnClassObject">
             <span class="icon"><i class="fa fa-plus"></i></span>
             <span>Add Account</span>
           </a>
-          <span v-show="fields.dirty">I'm Dirty</span>
+          
         </div> <!-- ADD BUTTON -->
-        
+
       </div>
     </div>
   </section>
 </template>
 
 <script>
-  import app from 'electron';
+  // import app from 'electron';
   import PasswordRow from './PasswordRow';
-  
-  //const result = db.get('passwords').value();
-  
+
   export default {
     name: 'password-table',
     components: { PasswordRow },
     
     data () {
       return {
+        msg: 'Search your passwords here',
         currentIndex: 0,
-        msg: 'Hi, search your passwords here',
         inAccount: '',
         inUsername: '',
         inEmail:'',
@@ -147,22 +145,23 @@
         tmpNumber: false,
         onAtoZ: true,
         onNumber: false,
-        database: result,
+        database: [],
+        writeTrigger: false,
       }
     },
 
     mounted: function() {
-      
+      this.updateDatabase();
     },
     
     computed: {
-      
-      isFormHasValue: function() {
+
+      isFormHasValue() {
         return Boolean(this.inAccount) && Boolean(this.inUsername)
               && Boolean(this.inEmail) && Boolean(this.inPassword);
       },
       
-      isAnyError: function() {
+      isAnyError() {
         if ( !this.isFormHasValue ) {
           return true;
          } else {
@@ -170,28 +169,31 @@
         }
       },
       
-      addBtnClassObject: function() {
+      addBtnClassObject() {
         return {
           'is-success': !this.isAnyError,
           'is-static': this.isAnyError
         }
-      }
+      },
     },
     
     methods: {
       addRow: function() {
-        this.database.push({
-          //id: this.currentIndex += 1,
+        this.$db.insert({
           account: this.inAccount,
           username: this.inUsername,
           email: this.inEmail,
           password: this.inPassword,
           used: 0
         });
+        
+        this.updateDatabase();
+        
         this.inAccount = '';
         this.inUsername = '';
         this.inEmail = '';
         this.inPassword = '';
+        this.writeTrigger = true;
       },
       
       delRow: function(index) {
@@ -216,7 +218,14 @@
         this.tmpNumber = !this.tmpNumber;
         this.onAtoZ = false;
         this.onNumber = true;
+      },
+      
+      updateDatabase() {
+        this.$db.find({}, (err, docs) => { 
+          this.database = docs.slice();
+        });
       }
+
     }
   }
 </script>
