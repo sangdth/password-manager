@@ -50,7 +50,7 @@
             <th>Action</th>
           </tr>
         </tfoot>
-        <tr is="password-row" v-for="(record, index) in database" v-bind:key="index" @remove="delRow(index)"
+        <tr is="password-row" v-for="(record, index) in database" v-bind:key="record._id" @remove="deleteRow(record._id)"
           v-bind:account="record.account"
           v-bind:username="record.username"
           v-bind:email="record.email"
@@ -196,8 +196,15 @@
         this.writeTrigger = true;
       },
       
-      delRow: function(index) {
-        this.database.splice(index, 1);
+      deleteRow: function(id) {
+        // this.database.splice(index, 1);
+        // Deleting a field
+        this.$db.remove({ _id: id, }, {}, function (err, numRemoved) {
+          // Now the document for Mars doesn't contain the planet field
+          // You can unset nested fields with the dot notation of course
+            console.log('Deleted ' + numRemoved + ' row with id: ' + id);
+          });
+        this.updateDatabase();
       },
       
       openSetting: function() {
