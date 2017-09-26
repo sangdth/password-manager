@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import PasswordTable from '@/components/PasswordTable';
-import Setting from '@/components/Setting';
+import PasswordTable from '../components/PasswordTable';
+import Setting from '../components/Setting'; // Replace @/ with ../ to stop eslint
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',

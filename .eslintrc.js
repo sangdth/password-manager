@@ -9,13 +9,17 @@ module.exports = {
   env: {
     browser: true,
   },
+  // extends: [
+  //   'eslint:airbnb-base',
+  //   'plugin:vue/recommended' // or 'plugin:vue/base'
+  // ],
   extends: 'airbnb-base',
   // required to lint *.vue files
   plugins: [
     'html'
   ],
   // check if imports actually resolve
-  'settings': {
+  settings: {
     'import/resolver': {
       'webpack': {
         'config': 'build/webpack.base.conf.js'
