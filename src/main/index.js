@@ -1,48 +1,87 @@
-import { app, BrowserWindow } from 'electron';
-
+import { app, BrowserWindow, Tray, Menu } from 'electron';
+import path from 'path';
 /**
  * Set `__static` path to static files in production
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
-  global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
+  global.__static = path.join(__dirname, '/static').replace(/\\/g, '\\\\');
 }
 
-let mainWindow
-const winURL = process.env.NODE_ENV === 'development'
-  ? `http://localhost:9080`
-  : `file://${__dirname}/index.html`
+let mainWindow;
+let appIcon;
 
-function createWindow () {
+const winURL = process.env.NODE_ENV === 'development'
+  ? 'http://localhost:9080'
+  : `file://${__dirname}/index.html`;
+
+function createWindow() {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
     height: 660,
     useContentSize: true,
-    width: 1024
-  })
+    width: 1024,
+    show: false, // Hide your application until your page has loaded
+  });
 
-  mainWindow.loadURL(winURL)
+  mainWindow.loadURL(winURL);
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  // Then, when everything is loaded, show the window and focus it
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
+    mainWindow.focus();
+  });
+
+  appIcon = new Tray(path.join(__dirname, '/static/icon@2x.png'));
+
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Show App',
+      click: () => {
+        mainWindow.show();
+      },
+    },
+    {
+      label: 'Quit',
+      click: () => {
+        app.isQuiting = true;
+        app.quit();
+      },
+    },
+  ]);
+
+  appIcon.setContextMenu(contextMenu);
+
+  mainWindow.on('close', (event) => {
+    if (app.isQuiting) {
+      mainWindow = null;
+    } else {
+      event.preventDefault();
+      mainWindow.hide();
+    }
+  });
+
+  mainWindow.on('minimize', (event) => {
+    event.preventDefault();
+    mainWindow.hide();
+  });
 }
 
-app.on('ready', createWindow)
+app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
-})
+});
 
 app.on('activate', () => {
   if (mainWindow === null) {
-    createWindow()
+    createWindow();
   }
-})
+});
 
 /**
  * Auto Updater
