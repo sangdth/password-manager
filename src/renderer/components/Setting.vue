@@ -1,8 +1,8 @@
 <template>
   <section class="section">
     <div class="container">
-      <h1 class="title">Setting</h1>
-      <p class="subtitle">This is file test</p>
+      <h1 class="title can-not-select">Setting</h1>
+      <p class="subtitle can-not-select">This is file test</p>
     </div>
   </section>
 </template>

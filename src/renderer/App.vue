@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="container">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
+      <nav class="navbar is-transparent" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <router-link :to="{ name: 'home' }">
             <a class="navbar-item">
@@ -37,7 +37,7 @@
     </div>
     <router-view></router-view>
     
-    <footer class="footer footer-default">
+    <footer class="footer footer-default can-not-select">
         <div class="container">Copyright MIT.</div>
     </footer>
   </div>
@@ -50,5 +50,7 @@
 </script>
 
 <style>
-  /* CSS */
+  .can-not-select {
+      -webkit-user-select:none;
+  }
 </style>
