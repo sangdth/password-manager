@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Tray, Menu } from 'electron';
 import path from 'path';
 /**
- * Set `__static` path to static files in  production 
+ * Set `__static` path to static files in production test
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
@@ -34,7 +34,12 @@ function createWindow() {
     {
       label: 'Show App',
       click: () => {
-        mainWindow.show();
+        // mainWindow.show();
+        if (mainWindow.isVisible()) {
+          mainWindow.hide();
+        } else {
+          mainWindow.show();
+        }
       },
     },
     {
@@ -46,25 +51,20 @@ function createWindow() {
     },
   ]);
 
-  appIcon.setContextMenu(contextMenu);
-
   // Then, when everything is loaded, show the window and focus it
-  mainWindow.on('ready-to-show', () => {
+  mainWindow.once('ready-to-show', () => {
+    appIcon.setContextMenu(contextMenu);
     mainWindow.show();
     mainWindow.focus();
   });
 
-  // mainWindow.on('close', (event) => {
-  //   if (app.isQuiting) {
-  //     mainWindow = null;
-  //   } else {
-  //     event.preventDefault();
-  //     mainWindow.hide();
-  //   }
-  // });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
+  mainWindow.on('close', (event) => {
+    if (app.isQuiting) {
+      mainWindow = null;
+    } else {
+      event.preventDefault();
+      mainWindow.hide();
+    }
   });
 
   mainWindow.on('minimize', (event) => {
@@ -73,11 +73,13 @@ function createWindow() {
   });
 }
 
+
 app.on('ready', createWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+    appIcon.destroy();
   }
 });
 

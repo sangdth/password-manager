@@ -1,9 +1,9 @@
 {
   "name": "password-manager",
-  "version": "2.0.0",
-  "author": "",
+  "version": "2.0.0b001",
+  "author": "Sang Dang",
   "description": "Simple password manager application built on VueJS and Electron",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "scripts": {
     "build": "node .electron-vue/build.js && electron-builder",
