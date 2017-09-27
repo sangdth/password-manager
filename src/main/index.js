@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Tray, Menu } from 'electron';
 import path from 'path';
 /**
- * Set `__static` path to static files in production test
+ * Set `__static` path to static files in productest
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 let mainWindow;
-let appIcon;
+// let appIcon;
 
 const winURL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:9080'
@@ -23,48 +23,51 @@ function createWindow() {
     height: 660,
     useContentSize: true,
     width: 1024,
-    show: false, // Hide your application until your page has loaded
+    // show: false, // Hide your application until your page has loaded
   });
 
   mainWindow.loadURL(winURL);
 
-  appIcon = new Tray(path.join(__dirname, '/icons/icon@2x.png'));
+  // appIcon = new Tray(path.join(__dirname, '/icons/icon@2x.png'));
 
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: 'Show App',
-      click: () => {
-        // mainWindow.show();
-        if (mainWindow.isVisible()) {
-          mainWindow.hide();
-        } else {
-          mainWindow.show();
-        }
-      },
-    },
-    {
-      label: 'Quit',
-      click: () => {
-        app.isQuiting = true;
-        app.quit();
-      },
-    },
-  ]);
+  // const contextMenu = Menu.buildFromTemplate([
+  //   {
+  //     label: 'Show App',
+  //     click: () => {
+  //       // mainWindow.show();
+  //       if (mainWindow.isVisible()) {
+  //         mainWindow.hide();
+  //       } else {
+  //         mainWindow.show();
+  //       }
+  //     },
+  //   },
+  //   {
+  //     label: 'Quit',
+  //     click: () => {
+  //       app.isQuiting = true;
+  //       app.quit();
+  //     },
+  //   },
+  // ]);
 
   // Then, when everything is loaded, show the window and focus it
-  mainWindow.once('ready-to-show', () => {
-    appIcon.setContextMenu(contextMenu);
-    mainWindow.show();
-    mainWindow.focus();
-  });
+  // mainWindow.once('ready-to-show', () => {
+  //   appIcon.setContextMenu(contextMenu);
+  //   mainWindow.show();
+  //   mainWindow.focus();
+  // });
 
-  mainWindow.on('close', (event) => {
-    if (app.isQuiting) {
-      mainWindow = null;
-    } else {
-      event.preventDefault();
-      mainWindow.hide();
-    }
+  // mainWindow.on('close', (event) => {
+  //   if (app.isQuiting) {
+  //     mainWindow = null;
+  //   } else {
+  //     event.preventDefault();
+  //     mainWindow.hide();
+  //   }
+  // });
+  mainWindow.on('closed', () => {
+    mainWindow = null;
   });
 
   mainWindow.on('minimize', (event) => {
