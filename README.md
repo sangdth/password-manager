@@ -14,15 +14,18 @@ Documentation about the original structure can be found [here](https://simulated
 ## Features
 The application should have these features, but some of them are under development.
 - [x] Add new item (each item is a row of password.)
-- [ ] Encrypt password input.
-- [x] Remove exist item.
-- [ ] Edit item.
-- [ ] Batch edit items.
+- [x] Use vue-router to navigate instead of pop-up modal.
 - [x] Validation of input.
+- [x] Find good database and intergrate into app. 
+- [x] Read/write to database.
+
+## Work in Progress
+These are features I'm working on it:
+- [ ] Encrypt password input.
+- [ ] Edit/delete record.
+- [ ] Sort by alphabetical order.
+- [ ] Sort by frequent of clicks.
 - [ ] Instant search.
-- [x] Sort by alphabetical order.
-- [x] Sort by frequent of clicks.
-- [ ] Read/write to database.
 - [ ] Setting: backup/restore items.
 
 ## Build Setup
