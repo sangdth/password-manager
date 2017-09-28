@@ -6,7 +6,7 @@
         <div class="column">
           <div class="field">
             <div class="control">
-              <input class="input is-large" type="text" :placeholder="msg">
+              <input v-model="filterText" class="input is-large" type="text" :placeholder="msg">
             </div>
           </div>
         </div>  <!-- End search form -->
@@ -50,14 +50,15 @@
             <th>Action</th>
           </tr>
         </tfoot>
-        <tr is="password-row" v-for="(record, index) in database" v-bind:key="record._id" @remove="deleteRow(record._id)"
-          v-bind:account="record.account"
-          v-bind:username="record.username"
-          v-bind:email="record.email"
-          v-bind:password="record.password"
-          v-bind:used="record.used"
-          v-bind:note="record.note" 
-          ></tr>
+        <tr is="password-row" v-for="(record, index) in filterPasswords"  @remove="deleteRow(record._id)"
+          :key="record._id" :id="record._id"
+          :account="record.account"
+          :username="record.username"
+          :email="record.email"
+          :password="record.password"
+          :used="record.used"
+          :note="record.note" 
+        ></tr>
       </table>
     </div>  <!-- End container of table -->
     
@@ -125,7 +126,6 @@
 </template>
 
 <script>
-  // import app from 'electron';
   import PasswordRow from './PasswordRow';
 
   export default {
@@ -135,6 +135,7 @@
     data () {
       return {
         msg: 'Search your passwords here',
+        filterText: '',
         currentIndex: 0,
         inAccount: '',
         inUsername: '',
@@ -175,6 +176,12 @@
           'is-static': this.isAnyError
         }
       },
+      
+      filterPasswords() {
+        var self = this;
+        return this.database.filter( (element) => {
+          return element.account.toLowerCase().indexOf(self.filterText.toLowerCase())>=0;});
+      },
     },
     
     methods: {
@@ -197,11 +204,9 @@
       },
       
       deleteRow: function(id) {
-        // this.database.splice(index, 1);
-        // Deleting a field
+        // Should call a "confirmation" before actually 
         this.$db.remove({ _id: id, }, {}, function (err, numRemoved) {
-          // Now the document for Mars doesn't contain the planet field
-          // You can unset nested fields with the dot notation of course
+          // Still don't know what is useful thing I could do after this?
             console.log('Deleted ' + numRemoved + ' row with id: ' + id);
           });
         this.updateDatabase();

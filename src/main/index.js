@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Tray, Menu } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import path from 'path';
 /**
  * Set `__static` path to static files in productest
@@ -66,6 +66,7 @@ function createWindow() {
   //     mainWindow.hide();
   //   }
   // });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
@@ -82,7 +83,6 @@ app.on('ready', createWindow);
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
-    appIcon.destroy();
   }
 });
 
