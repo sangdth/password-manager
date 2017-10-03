@@ -37,7 +37,6 @@
             <th>Email</th>
             <th>Password</th>
             <th>Note</th>
-            <th>Action</th>
           </tr>
         </thead>
         <tfoot>
@@ -47,7 +46,6 @@
             <th>Email</th>
             <th>Password</th>
             <th>Note</th>
-            <th>Action</th>
           </tr>
         </tfoot>
         <tr is="password-row" v-for="(record, index) in filterPasswords"  @remove="deleteRow(record._id)"
