@@ -29,7 +29,7 @@
     <br>
     
     <div class="container">
-      <table class="table is-bordered is-fullwidth">
+      <table class="table is-bordered is-fullwidth is-narrow">
         <thead>
           <tr>
             <th>Account</th>
@@ -48,7 +48,8 @@
             <th>Note</th>
           </tr>
         </tfoot>
-        <tr is="password-row" v-for="(record, index) in filterPasswords"  @remove="deleteRow(record._id)"
+        <tr is="password-row" v-for="(record, index) in filterPasswords"  
+          @remove="deleteRow(record._id)"
           :key="record._id" :id="record._id"
           :account="record.account"
           :username="record.username"

@@ -6,6 +6,7 @@ import VueClipboard from 'vue-clipboard2';
 
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
+// import 'animate.css/animate.min.css';
 
 import App from './App';
 import router from './router';

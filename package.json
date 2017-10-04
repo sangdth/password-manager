@@ -51,6 +51,7 @@
     }
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "axios": "^0.16.1",
     "bulma": "^0.5.2",
     "font-awesome": "^4.7.0",

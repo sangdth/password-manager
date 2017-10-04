@@ -6,7 +6,7 @@ import Setting from '../components/Setting'; // Replace @/ with ../ to stop esli
 Vue.use(Router);
 
 export default new Router({
-  mode: 'hash',
+  mode: 'hash', 
   routes: [
     {
       path: '/',
