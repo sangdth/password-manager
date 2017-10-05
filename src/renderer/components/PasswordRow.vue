@@ -46,7 +46,22 @@
 
 <script>
   export default {
-    props: ['id', 'account', 'username', 'email', 'password', 'used', 'note'],
+    // props: ['id', 'account', 'username', 'email', 'password', 'used', 'note'],
+    props: {
+      id: Number,
+      account: String,
+      username: {
+        type: String,
+        default: 'sangdth',
+      },
+      email: {
+        type: String,
+        default: 'sangdth@gmail.com',
+      }, 
+      password: String, 
+      used: Number,
+      note: String,
+    },
     
     data () {
       return {
