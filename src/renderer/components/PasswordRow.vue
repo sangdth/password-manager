@@ -3,13 +3,20 @@
     <td>{{ account }}</td>
     <td>{{ username }}</td>
     <td>{{ email }}</td>
-    <td><span type="password">{{ password }}</span>
+    <td>
+      <span v-if="!showPass">{{ coverPass }}</span>
+      <span v-else>{{ password }}</span>
       <span class="is-pulled-right">
         <a  v-clipboard:copy="password" v-clipboard:success="onSuccess" v-clipboard:error="onError"
             @click="count"
             class="button is-small is-outline tooltip" type="button" 
             data-tooltip="Copy" data-placement="top">
             <i class="fa fa-clipboard"></i>
+        </a>
+        <a  @click="showPass = !showPass" 
+            class="button is-small is-outline tooltip" 
+            data-tooltip="Show" data-placement="top">
+            <i class="fa fa-eye fa-lg"></i>
         </a>  
         <a  @click="editRow(id)" 
             class="button is-small is-outline tooltip" 
@@ -68,6 +75,8 @@
         isEditMode: false,
         copySucceeded: null,
         confirm: false,
+        coverPass: '* * * * * *',
+        showPass: false,
       }
     },
     
