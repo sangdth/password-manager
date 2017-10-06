@@ -1,5 +1,4 @@
 # Password Manager
-[![Build Status](https://travis-ci.org/sangdth/password-manager.svg?branch=master)](https://travis-ci.org/sangdth/password-manager)
 
 > This is a simple password manager application built on [VueJS](https://vuejs.org/) and [Electron](https://electron.atom.io/). I'm doing this project for study purpose, since I want to become a front end developer, but also for my personal use. 
 
