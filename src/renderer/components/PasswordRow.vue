@@ -8,9 +8,10 @@
       <span v-else>{{ password }}</span>
       <span class="is-pulled-right">
         <a  v-clipboard:copy="password" v-clipboard:success="onSuccess" v-clipboard:error="onError"
-            @click="count"
+            @click="addCount"
             class="button is-small is-outline tooltip" type="button" 
             data-tooltip="Copy" data-placement="top">
+            <span class="is-light is-pulled-left used">{{ used }} </span> 
             <i class="fa fa-clipboard"></i>
         </a>
         <a  @click="showPass = !showPass" 
@@ -47,7 +48,7 @@
       </span>
       
     </td>
-    <td>{{ note }} <span class="tag is-light is-pulled-right">{{ used }}</span></td>
+    <td>{{ note }}</td>
     </tr>
 </template>
 
@@ -55,7 +56,7 @@
   export default {
     // props: ['id', 'account', 'username', 'email', 'password', 'used', 'note'],
     props: {
-      id: Number,
+      id: String,
       account: String,
       username: {
         type: String,
@@ -101,10 +102,18 @@
         
       },
       
-      count: function() {
+      addCount: function() {
+        this.$emit('increase');
         // still not save into database, try later
         // this.used += 1;
       }
     }
   }
 </script>
+
+<style>
+.used {
+  margin-left: 3px;
+  margin-right: 10px;
+}
+</style>

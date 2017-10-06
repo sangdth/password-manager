@@ -50,6 +50,7 @@
         </tfoot>
         <tr is="password-row" v-for="(record, index) in filterPasswords"  
           @remove="deleteRow(record._id)"
+          @increase="addUsed(record.used)"
           :key="record._id" :id="record._id"
           :account="record.account"
           :username="record.username"
@@ -64,7 +65,7 @@
     <div class="container">
       <div class="columns">
         
-        <div class="column"> <!-- Inputs -->
+        <div class="column" @keyup.enter="addRow"> <!-- Inputs -->
           <div class="columns">
             
             <div class="column">
@@ -184,54 +185,75 @@
     },
     
     methods: {
-      addRow: function() {
-        this.$db.insert({
-          account: this.inAccount,
-          username: this.inUsername,
-          email: this.inEmail,
-          password: this.inPassword,
-          used: 0
-        });
-        
-        this.updateDatabase();
-        
-        this.inAccount = '';
-        this.inUsername = '';
-        this.inEmail = '';
-        this.inPassword = '';
-        this.writeTrigger = true;
+      addRow: function () {
+        let self = this;
+        if(!this.isAnyError) {
+          this.$db.insert({
+            account: this.inAccount,
+            username: this.inUsername,
+            email: this.inEmail,
+            password: this.inPassword,
+            used: 0
+          }, function (err, newDoc) {
+            console.log('Added new document.');
+            self.updateDatabase();
+            console.log('And updated database after add new.');
+            self.inAccount = '';
+            self.inUsername = 'sangdth';
+            self.inEmail = 'sangdth@gmail.com';
+            self.inPassword = '';
+            self.writeTrigger = true;
+            console.log('And reset forms.');
+          });
+        } else {
+          console.log('Error, please fill input!');
+        }
       },
       
-      deleteRow: function(id) {
+      deleteRow: function (id) {
+        let self = this;
         // Should call a "confirmation" before actually 
         this.$db.remove({ _id: id, }, {}, function (err, numRemoved) {
           // Still don't know what is useful thing I could do after this?
             console.log('Deleted ' + numRemoved + ' row with id: ' + id);
+            self.updateDatabase();
+            console.log('And updated database after delete.');
           });
-        this.updateDatabase();
+        // this.updateDatabase();
       },
       
-      openSetting: function() {
+      addUsed: function (used) {
+        let plusUsed = used + 1;
+        let self = this;
+        this.$db.update({used: used}, { $set: {used: plusUsed}}, function(err, numReplaced) {
+          console.log('Updated numer used with ' + numReplaced + ' document.');
+          self.updateDatabase();
+          console.log('And updated database after update.');
+        });
+        // this.updateDatabase();
+      },
+      
+      openSetting: function () {
         this.onSetting = true;
       },
       
-      closeSetting: function() {
+      closeSetting: function () {
         this.onSetting = false;
       },
       
-      toggleAtoZ: function() {
+      toggleAtoZ: function () {
         this.tmpAtoZ = !this.tmpAtoZ;
         this.onAtoZ = true;
         this.onNumber = false;
       },
       
-      toggleNumber: function() {
+      toggleNumber: function () {
         this.tmpNumber = !this.tmpNumber;
         this.onAtoZ = false;
         this.onNumber = true;
       },
       
-      updateDatabase() {
+      updateDatabase: function () {
         this.$db.find({}, (err, docs) => { 
           this.database = docs.slice();
         });

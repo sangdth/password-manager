@@ -5,11 +5,11 @@ import { remote } from 'electron';
 export default new Datastore({
   autoload: true,
   filename: path.join(remote.app.getPath('userData'), '/data.db'),
-  afterSerialization: function (doc) {
+  //afterSerialization: function (doc) {
     // const msg = doc.split('').reverse().join('');
     
-		console.log('this is afterSerialization with ' + doc );
-    return doc;
+		//console.log('this is afterSerialization with ' + doc );
+   // return doc;
 		// var encrypted = doc;
 		
 		// try{
@@ -26,11 +26,11 @@ export default new Datastore({
 		// }
 		// da=encrypted;
 		
-	},
-  beforeDeserialization: function(doc) {
+	//},
+  //beforeDeserialization: function(doc) {
     // const msg = doc.split('').reverse().join('');
     
-		console.log('this is beforeDeserialization with ' + doc );
-    return doc;
-  }
+	//	console.log('this is beforeDeserialization with ' + doc );
+  //  return doc;
+  //}
 });
