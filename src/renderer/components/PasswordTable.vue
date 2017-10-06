@@ -50,7 +50,7 @@
         </tfoot>
         <tr is="password-row" v-for="(record, index) in filterPasswords"  
           @remove="deleteRow(record._id)"
-          @increase="addUsed(record.used)"
+          @increase="addUsed(record._id, record.used)"
           :key="record._id" :id="record._id"
           :account="record.account"
           :username="record.username"
@@ -222,10 +222,10 @@
         // this.updateDatabase();
       },
       
-      addUsed: function (used) {
-        let plusUsed = used + 1;
+      addUsed: function (id, used) {
+        used += 1;
         let self = this;
-        this.$db.update({used: used}, { $set: {used: plusUsed}}, function(err, numReplaced) {
+        this.$db.update({_id: id}, { $set: {used: used}}, function(err, numReplaced) {
           console.log('Updated numer used with ' + numReplaced + ' document.');
           self.updateDatabase();
           console.log('And updated database after update.');
