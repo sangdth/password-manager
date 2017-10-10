@@ -16,7 +16,7 @@ The application should have these features, but some of them are under developme
 - [x] Use vue-router to navigate instead of pop-up modal.
 - [x] Validation of input.
 - [x] Find good database and intergrade into app. 
-- [x] Read/write to database.
+- [x] Read/write to database (save file local).
 - [x] Delete record.
 - [x] Instant search.
 
