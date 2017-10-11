@@ -15,16 +15,17 @@ The application should have these features, but some of them are under developme
 - [x] Add new item (each item is a row of password.)
 - [x] Use vue-router to navigate instead of pop-up modal.
 - [x] Validation of input.
-- [x] Find good database and intergrate into app. 
-- [x] Read/write to database.
+- [x] Find good database and intergrade into app. 
+- [x] Read/write to database (save file local).
+- [x] Delete record.
+- [x] Instant search.
 
 ## Work in Progress
 These are features I'm working on it:
 - [ ] Encrypt password input.
-- [ ] Edit/delete record.
+- [ ] Edit record.
 - [ ] Sort by alphabetical order.
 - [ ] Sort by frequent of clicks.
-- [ ] Instant search.
 - [ ] Setting: backup/restore items.
 
 ## Build Setup

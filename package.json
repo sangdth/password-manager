@@ -1,6 +1,6 @@
 {
   "name": "password-manager",
-  "version": "2.0.2",
+  "version": "2.2.3",
   "author": "Sang Dang",
   "description":
     "Simple password manager application built on VueJS and Electron",
@@ -16,8 +16,7 @@
     "pack:main":
       "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
     "pack:renderer":
-      "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
-    "postinstall": ""
+      "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js"
   },
   "build": {
     "productName": "Password Manager",

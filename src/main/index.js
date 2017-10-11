@@ -84,7 +84,6 @@ function createWindow() {
             { role: "pasteandmatchstyle" },
             { role: "delete" },
             { role: "selectall" },
-            { role: "minimize" },
             { role: "close" },
             { role: "quit" }
           ]
