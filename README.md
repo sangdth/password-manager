@@ -28,6 +28,9 @@ These are features I'm working on it:
 - [ ] Sort by frequent of clicks.
 - [ ] Setting: backup/restore items.
 
+## Note!
+In current situation, I still don't know how to encrypt the password input, so everything will be saved as RAW text in `userData` directory + `/data.db`, so consider to delete your data if you stop using it.
+
 ## Build Setup
 ``` bash
 # install dependencies
