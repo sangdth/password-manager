@@ -48,13 +48,11 @@
       </span>
       
     </td>
-    <td>{{ note }}</td>
     </tr>
 </template>
 
 <script>
   export default {
-    // props: ['id', 'account', 'username', 'email', 'password', 'used', 'note'],
     props: {
       id: String,
       account: String,
@@ -68,7 +66,6 @@
       }, 
       password: String, 
       used: Number,
-      note: String,
     },
     
     data () {
@@ -112,8 +109,5 @@
 </script>
 
 <style>
-.used {
-  margin-left: 3px;
-  margin-right: 10px;
-}
+
 </style>

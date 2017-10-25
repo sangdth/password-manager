@@ -53,14 +53,17 @@
     "animate.css": "^3.5.2",
     "axios": "^0.16.1",
     "bulma": "^0.5.2",
+    "bulmaswatch": "^0.5.2",
     "font-awesome": "^4.7.0",
+    "lodash": "^4.17.4",
     "nedb": "^1.8.0",
     "vee-validate": "^2.0.0-rc.17",
     "vue": "^2.3.3",
     "vue-clipboard2": "0.0.6",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
-    "vuex": "^2.3.1"
+    "vuex": "^2.3.1",
+    "xel": "0.0.65"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

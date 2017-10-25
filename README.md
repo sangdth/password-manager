@@ -19,14 +19,15 @@ The application should have these features, but some of them are under developme
 - [x] Read/write to database (save file local).
 - [x] Delete record.
 - [x] Instant search.
+- [x] Sort by alphabetical order.
+- [x] Sort by frequent of clicks.
 
 ## Work in Progress
 These are features I'm working on it:
 - [ ] Encrypt password input.
 - [ ] Edit record.
-- [ ] Sort by alphabetical order.
-- [ ] Sort by frequent of clicks.
 - [ ] Setting: backup/restore items.
+- [ ] Make the `updateDatabase` respects current sort status.
 
 ## Note!
 In current situation, I still don't know how to encrypt the password input, so everything will be saved as RAW text in `userData` directory + `/data.db`, so consider to delete your data if you stop using it.”

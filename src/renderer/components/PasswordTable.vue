@@ -6,7 +6,14 @@
         <div class="column">
           <div class="field">
             <div class="control">
-              <input v-model="filterText" class="input is-large" type="text" :placeholder="msg">
+                <!-- We use filterText as variable for filterPasswords array.
+                    Then we trigger escape button event by clear the filterText
+                 -->
+              <input 
+                  v-model="filterText" 
+                  :placeholder="msg" 
+                  @keyup.27="filterText = ''"
+                  class="input is-large" type="text">
             </div>
           </div>
         </div>  <!-- End search form -->
@@ -36,7 +43,6 @@
             <th>Username</th>
             <th>Email</th>
             <th>Password</th>
-            <th>Note</th>
           </tr>
         </thead>
         <tfoot>
@@ -45,7 +51,6 @@
             <th>Username</th>
             <th>Email</th>
             <th>Password</th>
-            <th>Note</th>
           </tr>
         </tfoot>
         <tr is="password-row" v-for="(record, index) in filterPasswords"  
@@ -57,8 +62,7 @@
           :email="record.email"
           :password="record.password"
           :used="record.used"
-          :note="record.note" 
-        ></tr>
+            ></tr>
       </table>
     </div>  <!-- End container of table -->
     
@@ -71,7 +75,7 @@
             <div class="column">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large is-narrow" 
+                  <input class="input is-narrow" 
                   v-validate="'required'" v-model="inAccount" name="account" 
                   type="text" placeholder="Account">
                 </div>
@@ -81,7 +85,7 @@
             <div class="column">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large is-narrow" 
+                  <input class="input is-narrow" 
                   v-validate="'required'" v-model="inUsername" name="username" 
                   type="text" placeholder="Username">
                 </div>
@@ -91,7 +95,7 @@
             <div class="column">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large is-narrow"
+                  <input class="input is-narrow"
                   v-validate="'required|email'" v-model="inEmail" name="email" 
                   type="email" placeholder="Email">
                   
@@ -102,7 +106,7 @@
             <div class="column">
               <div class="field">
                 <div class="control">
-                  <input class="input is-large is-narrow"
+                  <input class="input is-narrow"
                   v-validate="'required'" v-model="inPassword" name="password" 
                   type="text" placeholder="Password">
                 </div>
@@ -113,7 +117,7 @@
         </div> <!-- END INPUT -->
         
         <div class="column is-narrow">
-          <a @click="addRow" class="button is-large is-pulled-right" :class="addBtnClassObject">
+          <a @click="addRow" class="button is-pulled-right" :class="addBtnClassObject">
             <span class="icon"><i class="fa fa-plus"></i></span>
             <span>Add Account</span>
           </a>
@@ -127,6 +131,7 @@
 
 <script>
   import PasswordRow from './PasswordRow';
+  import _ from 'lodash'; // why ignore the prototype at main.js ? 
 
   export default {
     name: 'password-table',
@@ -148,6 +153,8 @@
         onNumber: false,
         database: [],
         writeTrigger: false,
+        sortKey: 'name',
+        reverse: false,
       }
     },
 
@@ -233,6 +240,11 @@
         // this.updateDatabase();
       },
       
+      orderPasswords: function (sortKey, order) {
+          // Note: order must be Boolean
+        this.database = _.orderBy(this.database, sortKey, order ? 'asc' : 'desc');
+      },
+      
       openSetting: function () {
         this.onSetting = true;
       },
@@ -245,12 +257,14 @@
         this.tmpAtoZ = !this.tmpAtoZ;
         this.onAtoZ = true;
         this.onNumber = false;
+        this.orderPasswords('account', this.tmpAtoZ);
       },
       
       toggleNumber: function () {
         this.tmpNumber = !this.tmpNumber;
         this.onAtoZ = false;
         this.onNumber = true;
+        this.orderPasswords('used', this.tmpNumber);
       },
       
       updateDatabase: function () {

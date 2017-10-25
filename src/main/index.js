@@ -9,7 +9,6 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 let mainWindow;
-// let appIcon;
 
 const winURL =
   process.env.NODE_ENV === "development"
@@ -21,52 +20,14 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 660,
+    height: 800,
     useContentSize: true,
-    width: 1024
+    width: 1024,
+    // frame: false
     // show: false, // Hide your application until your page has loaded
   });
 
   mainWindow.loadURL(winURL);
-
-  // appIcon = new Tray(path.join(__dirname, '/icons/icon@2x.png'));
-
-  // const contextMenu = Menu.buildFromTemplate([
-  //   {
-  //     label: 'Show App',
-  //     click: () => {
-  //       // mainWindow.show();
-  //       if (mainWindow.isVisible()) {
-  //         mainWindow.hide();
-  //       } else {
-  //         mainWindow.show();
-  //       }
-  //     },
-  //   },
-  //   {
-  //     label: 'Quit',
-  //     click: () => {
-  //       app.isQuiting = true;
-  //       app.quit();
-  //     },
-  //   },
-  // ]);
-
-  // Then, when everything is loaded, show the window and focus it
-  // mainWindow.once('ready-to-show', () => {
-  //   appIcon.setContextMenu(contextMenu);
-  //   mainWindow.show();
-  //   mainWindow.focus();
-  // });
-
-  // mainWindow.on('close', (event) => {
-  //   if (app.isQuiting) {
-  //     mainWindow = null;
-  //   } else {
-  //     event.preventDefault();
-  //     mainWindow.hide();
-  //   }
-  // });
 
   if (process.platform === "darwin") {
     // Create our menu entries so that we can use MAC shortcuts
