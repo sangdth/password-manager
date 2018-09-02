@@ -1,6 +1,6 @@
 # Password Manager
 
-> This is a simple password manager application built on [VueJS](https://vuejs.org/) and [Electron](https://electron.atom.io/). I'm doing this project for study purpose, since I want to become a front end developer, but also for my personal use. 
+> This is a simple password manager application built on [VueJS](https://vuejs.org/) and [Electron](https://electron.atom.io/). I'm doing this project for my personal use. 
 
 
 ![Demo image](https://i.imgur.com/OyRmzZ0.png)
