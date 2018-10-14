@@ -3,7 +3,7 @@ import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
-
+// personal github access token 65d7f57b1985326c46c2808f49c9797384ce2e64
 Raven
   .config('https://43389517c19046dfae956c547b7b7ac4@sentry.io/1300632')
   .addPlugin(RavenVue, Vue)
@@ -12,13 +12,11 @@ Raven
 const api = {
   init() {
     Vue.use(VueAxios, axios);
-    Vue.axios.defaults.baseURL = process.env.NODE_ENV === 'production'
-      ? '' // let user config their gist here
-      : ''; // also dev part
+    Vue.axios.defaults.baseURL = 'https://api.github.com';
   },
 
   setHeaders(token, callback) {
-    Vue.axios.defaults.headers.common.Authorization = `Token ${token}`;
+    Vue.axios.defaults.headers.common.Authorization = `token ${token}`;
     callback();
   },
 

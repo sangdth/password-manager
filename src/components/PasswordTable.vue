@@ -1,16 +1,22 @@
 <template>
-  <div class="test">
-   x  test§
+  <div class="password-table">
+    <el-table>
+
+    </el-table>
   </div>
 </template>
 
 <script>
+import { mapGeters } from 'vuex';
+import simpleCrypto from '../common/simple.crypto';
+
 export default {
   name: 'PasswordTable',
 
   data() {
     return {
       msg: 'Search your passwords here',
+      test: 'test',
       filterText: '',
       currentIndex: 0,
       inAccount: '',
@@ -30,21 +36,18 @@ export default {
   },
 
   computed: {
-    isAnyError() {
-      if (!this.isFormHasValue) {
-        return true;
-      }
-      return this.errors.any();
-    },
+    ...mapGeters('gist', ['passwords']),
 
-    filterPasswords() {
-      const self = this;
-      return this.database.filter(element =>
-        element.account.toLowerCase().indexOf(self.filterText.toLowerCase()) >= 0);
+    encoded() {
+      return simpleCrypto.encode(this.test, 'mypassword');
     },
   },
 
   methods: {
+    decode(i) {
+      return simpleCrypto.decode(i, 'mypassword');
+    },
+
     openSetting() {
       this.onSetting = true;
     },
