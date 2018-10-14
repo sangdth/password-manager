@@ -16,6 +16,7 @@ const api = {
   },
 
   setHeaders(token, callback) {
+    console.log('set headers', token);
     Vue.axios.defaults.headers.common.Authorization = `token ${token}`;
     callback();
   },

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "electron-json-storage": "^4.1.4",
     "element-ui": "^2.4.5",
     "raven-js": "^3.27.0",
     "register-service-worker": "^1.0.0",

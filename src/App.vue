@@ -27,6 +27,15 @@
                   </a>
                 </router-link>
 
+                <router-link :to="{ name: 'signin' }">
+                  <a class="button is-dark is-outlined">
+                    <span class="icon">
+                      <i class="fa fa-cog"></i>
+                    </span>
+                    <span>Signin</span>
+                  </a>
+                </router-link>
+
               </p>
             </div>
           </div>
@@ -43,7 +52,7 @@
 
 <script>
 export default {
-
+  name: 'PasswordManager',
 };
 </script>
 

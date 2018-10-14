@@ -1,13 +1,11 @@
 <template>
   <div class="password-table">
-    <el-table>
-
-    </el-table>
+    testx
   </div>
 </template>
 
 <script>
-import { mapGeters } from 'vuex';
+import { mapGetters } from 'vuex';
 import simpleCrypto from '../common/simple.crypto';
 
 export default {
@@ -36,11 +34,21 @@ export default {
   },
 
   computed: {
-    ...mapGeters('gist', ['passwords']),
+    ...mapGetters('gist', ['rawData']),
 
     encoded() {
       return simpleCrypto.encode(this.test, 'mypassword');
     },
+  },
+
+  beforeCreate() {
+    this.$store.dispatch('gist/GET_DATA')
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 
   methods: {

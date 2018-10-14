@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import VueClipboard from 'vue-clipboard2';
+import 'element-ui/lib/theme-chalk/index.css';
 import 'element-ui/lib/theme-chalk/display.css';
 
 import App from './App';
@@ -12,7 +13,9 @@ import './plugins/element';
 
 api.init();
 
-Vue.use(VeeValidate);
+// change fieldsBagName to avoid conflict with ElementUI
+// read more at https://github.com/ElemeFE/element/issues/4720
+Vue.use(VeeValidate, { fieldsBagName: 'vFields' });
 Vue.use(VueClipboard);
 Vue.config.productionTip = false;
 

@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import PasswordTable from '../components/PasswordTable';
-import Setting from '../components/Setting'; // Replace @/ with ../ to stop eslint
+import PasswordTable from '../views/PasswordTable';
+import Setting from '../views/Setting';
+import SigninForm from '../components/SigninForm';
 
 Vue.use(Router);
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/setting',
       name: 'setting',
       component: Setting,
+    },
+    {
+      path: '/signin',
+      name: 'signin',
+      component: SigninForm,
     },
   ],
 });
