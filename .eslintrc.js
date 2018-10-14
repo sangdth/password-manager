@@ -10,6 +10,25 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-shadow': ['error', { builtinGlobals: false, allow: ['state'] }],
+    'no-underscore-dangle': 0,
+    'no-plusplus': 0,
+    'vue/max-attributes-per-line': ['error', {
+      'singleline': 2,
+      'multiline': {
+        'max': 1,
+        'allowFirstLine': false
+      }
+    }],
+    // don't require .vue extension when importing
+    'import/extensions': [
+      'error',
+      'always',
+      {
+        js: 'never',
+        vue: 'never',
+      },
+    ],
   },
   parserOptions: {
     parser: 'babel-eslint',
