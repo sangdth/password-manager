@@ -1,3 +1,4 @@
+import storage from 'electron-json-storage';
 import api from '../../common/api.services';
 import errorHandler from '../../common/error.handler';
 import {
@@ -5,8 +6,6 @@ import {
   SET_DATA,
   CREATE_GIST,
 } from '../types';
-
-const gistId = '34b3e32f2c866cdcaa74f5c56d6924b5';
 
 const state = {
   passwords: [],
@@ -19,10 +18,16 @@ const getters = {
 };
 
 const actions = {
-  async [GET_DATA]({ commit }) {
+  async [GET_DATA]({ commit }, gistId) {
+    storage.get('user-data', (error, data) => {
+      if (error) throw error;
+      console.log('storage', data);
+    });
+
     try {
       const response = await api.get(`/gists/${gistId}`);
       commit(SET_DATA, response.data.files);
+      console.log('response', response);
       return response;
     } catch (e) {
       errorHandler(e);

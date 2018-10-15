@@ -34,6 +34,7 @@ export default {
   },
 
   computed: {
+    ...mapGetters('auth', ['isAuthed']),
     ...mapGetters('gist', ['rawData']),
 
     encoded() {
@@ -41,7 +42,11 @@ export default {
     },
   },
 
-  beforeCreate() {
+  created() {
+    if (this.isAuthed === false) {
+      this.$router.push({ name: 'signin' });
+    }
+    /*
     this.$store.dispatch('gist/GET_DATA')
       .then((res) => {
         console.log(res);
@@ -49,6 +54,7 @@ export default {
       .catch((e) => {
         console.log(e);
       });
+      */
   },
 
   methods: {

@@ -1,8 +1,6 @@
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import VueClipboard from 'vue-clipboard2';
-import 'element-ui/lib/theme-chalk/index.css';
-import 'element-ui/lib/theme-chalk/display.css';
 
 import App from './App';
 import router from './router';

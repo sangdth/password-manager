@@ -1,66 +1,92 @@
 <template>
-  <div id="app">
-    <nav
-      class="navbar is-transparent"
-      role="navigation"
-      aria-label="main navigation"
-    >
-          <div class="container">
-        <div class="navbar-brand">
-          <router-link :to="{ name: 'home' }">
-            <a class="navbar-item">
-              <span class="has-text-weight-bold is-size-5">Password Manager</span>
-            </a>
-          </router-link>
-        </div> <!-- Navbar Brand -->
+  <el-container>
+    <el-aside width="64px" class="side-menu">
+      <el-menu
+        router
+        collapse
+        class="el-menu-vertical-demo"
+        @open="handleOpen"
+        @close="handleClose"
+        @select="handleSelect"
+      >
+        <el-menu-item index="/">
+          <i class="el-icon-menu"></i>
+          <span slot="title">Passwords</span>
+        </el-menu-item>
+        <el-menu-item index="/setting">
+          <i class="el-icon-setting"></i>
+          <span slot="title"> Settings</span>
+        </el-menu-item>
+        <el-menu-item index="/signin">
+          <i class="el-icon-star-off"></i>
+          <span slot="title"> Signin</span>
+        </el-menu-item>
+      </el-menu>
+    </el-aside>
 
-        <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <router-link :to="{ name: 'setting' }">
-                  <a class="button is-dark is-outlined">
-                    <span class="icon">
-                      <i class="fa fa-cog"></i>
-                    </span>
-                    <span>Settings</span>
-                  </a>
-                </router-link>
+    <el-container>
+      <el-header style="text-align: right; font-size: 12px">
+        <el-dropdown>
+          <i class="el-icon-setting" style="margin-right: 15px"></i>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>View</el-dropdown-item>
+            <el-dropdown-item>Add</el-dropdown-item>
+            <el-dropdown-item>Delete</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+        <span>Tom</span>
+      </el-header>
 
-                <router-link :to="{ name: 'signin' }">
-                  <a class="button is-dark is-outlined">
-                    <span class="icon">
-                      <i class="fa fa-cog"></i>
-                    </span>
-                    <span>Signin</span>
-                  </a>
-                </router-link>
-
-              </p>
-            </div>
-          </div>
-        </div>
-        </div>
-      </nav> <!-- End Navbar -->
-    <router-view></router-view>
-
-    <footer class="footer footer-default can-not-select">
-        <div class="container">Copyright MIT.</div>
-    </footer>
-  </div>
+      <el-main>
+        <router-view></router-view>
+      </el-main>
+    </el-container>
+</el-container>
 </template>
 
 <script>
 export default {
   name: 'PasswordManager',
+
+  data() {
+    return {
+      activeIndex: '',
+    };
+  },
+
+  watch: {
+    $route() {
+      this.handleSelect();
+    },
+  },
+
+  methods: {
+    handleSelect() {
+      this.activeIndex = this.$route.path;
+    },
+
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath);
+    },
+
+    handleClose(key, keyPath) {
+      console.log(key, keyPath);
+    },
+  },
 };
 </script>
 
-<style>
-  body {
-    -webkit-app-region: drag;
+<style lang="scss">
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-app-region: drag;
+
+  .side-menu {
+    padding-top: 50px;
   }
-  .can-not-select {
-      -webkit-user-select: none;
-  }
+
+}
+.can-not-select {
+    -webkit-user-select: none;
+}
 </style>

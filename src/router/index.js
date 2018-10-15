@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import PasswordTable from '../views/PasswordTable';
 import Setting from '../views/Setting';
-import SigninForm from '../components/SigninForm';
+import SigninForm from '../views/SigninForm';
 
 Vue.use(Router);
 
@@ -11,7 +11,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'password-table',
       component: PasswordTable,
     },
     {
