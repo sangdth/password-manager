@@ -83,6 +83,7 @@ body {
 
   .side-menu {
     padding-top: 50px;
+    overflow: hidden;
   }
 
 }

@@ -130,13 +130,13 @@ export default {
 
 <style lang="scss" scoped>
 .header {
-  height: 260px;
-  padding-top: 30px;
+  height: 200px;
+  padding-top: 10px;
 
   .logo {
     display: block;
     width: 100px;
-    margin: 30px auto;
+    margin: 20px auto;
   }
 }
 .toggle-icon {
