@@ -1,8 +1,8 @@
 import storage from 'electron-json-storage';
-import api from '../../common/api.services';
-import errorHandler from '../../common/error.handler';
-import simpleCrypto from '../../common/simple.crypto';
-import { SIGN_IN, SET_AUTH } from '../types';
+import api from '@/common/api.services';
+import errorHandler from '@/common/error.handler';
+import { SIGN_IN, SET_AUTH } from '@/store/types';
+// import simpleCrypto from '@/common/simple.crypto';
 
 const state = {
   isAuthed: false,
@@ -16,21 +16,13 @@ const getters = {
 const actions = {
   async [SIGN_IN]({ commit, dispatch }, formData) {
     try {
-      api.setHeaders(formData.token, () => {});
+      const setHead = await api.setHeaders(formData.token);
 
-      storage.set(
-        'user-data',
-        {
-          token: formData.token,
-          passphrase: formData.passphrase,
-          gistId: formData.gistId,
-        },
-        e => e,
-      );
+      storage.set('user-data', formData, e => e);
 
-      if (formData.gistId.length > 0) {
-        console.log('start dispatch');
-        await dispatch('gist/GET_DATA', formData.gistId, { root: true })
+      if (formData.gistId.length > 0 && setHead.success) {
+        // console.log('start dispatch');
+        await dispatch('gist/GET_GIST', formData.gistId, { root: true })
           .then((response) => {
             if (response.status === 200) {
               commit(SET_AUTH, true);
@@ -49,6 +41,7 @@ const actions = {
 
 const mutations = {
   [SET_AUTH](state, status) {
+    console.log('run set auth');
     state.isAuthed = status;
   },
 };

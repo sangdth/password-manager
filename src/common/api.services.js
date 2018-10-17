@@ -3,7 +3,7 @@ import Vue from 'vue';
 import VueAxios from 'vue-axios';
 import Raven from 'raven-js';
 import RavenVue from 'raven-js/plugins/vue';
-// personal github access token 65d7f57b1985326c46c2808f49c9797384ce2e64
+
 Raven
   .config('https://43389517c19046dfae956c547b7b7ac4@sentry.io/1300632')
   .addPlugin(RavenVue, Vue)
@@ -15,10 +15,15 @@ const api = {
     Vue.axios.defaults.baseURL = 'https://api.github.com';
   },
 
-  setHeaders(token, callback) {
-    console.log('set headers', token);
-    Vue.axios.defaults.headers.common.Authorization = `token ${token}`;
-    callback();
+  setHeaders(token) {
+    return new Promise((resolve, reject) => {
+      if (token) {
+        Vue.axios.defaults.headers.common.Authorization = `token ${token}`;
+        resolve({ success: true });
+      } else {
+        reject(new Error('No token'));
+      }
+    });
   },
 
   get(resource) {
@@ -51,6 +56,15 @@ const api = {
   put(resource, data) {
     return Vue.axios
       .put(resource, data)
+      .catch((e) => {
+        Raven.captureException(e);
+        throw e;
+      });
+  },
+
+  patch(resource, data) {
+    return Vue.axios
+      .patch(resource, data)
       .catch((e) => {
         Raven.captureException(e);
         throw e;

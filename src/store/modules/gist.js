@@ -2,8 +2,9 @@ import storage from 'electron-json-storage';
 import api from '../../common/api.services';
 import errorHandler from '../../common/error.handler';
 import {
-  GET_DATA,
-  SET_DATA,
+  GET_GIST,
+  SET_GIST,
+  EDIT_GIST,
   CREATE_GIST,
 } from '../types';
 
@@ -18,16 +19,10 @@ const getters = {
 };
 
 const actions = {
-  async [GET_DATA]({ commit }, gistId) {
-    storage.get('user-data', (error, data) => {
-      if (error) throw error;
-      console.log('storage', data);
-    });
-
+  async [GET_GIST]({ commit }, gistId) {
     try {
       const response = await api.get(`/gists/${gistId}`);
-      commit(SET_DATA, response.data.files);
-      console.log('response', response);
+      commit(SET_GIST, response.data);
       return response;
     } catch (e) {
       errorHandler(e);
@@ -36,21 +31,30 @@ const actions = {
   },
 
   async [CREATE_GIST]({ commit }, data) {
-    console.log('CREATE_GIST', data);
     try {
       const response = await api.post('/gists', data);
-      console.log('response CREATE_GIST', response);
-      commit(SET_DATA, response.data.files);
+      commit(SET_GIST, response.data);
       return response;
     } catch (e) {
       errorHandler(e);
     }
     throw new Error('CREATE_GIST got error');
   },
+
+  async [EDIT_GIST]({ commit }, data) {
+    try {
+      const response = await api.patch(`/gists/${data.id}`, data.gist);
+      commit(SET_GIST, response.data);
+      return response;
+    } catch (e) {
+      errorHandler(e);
+    }
+    throw new Error('EDIT_GIST got error');
+  },
 };
 
 const mutations = {
-  [SET_DATA](state, data) {
+  [SET_GIST](state, data) {
     state.rawData = data;
   },
 };

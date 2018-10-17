@@ -93,7 +93,7 @@ export default {
   created() {
     storage.get('user-data', (error, data) => {
       if (error) throw error;
-      console.log('storage', data);
+      // console.log('storage', data);
       if (data.token) {
         this.form.token = data.token;
       }
@@ -108,14 +108,14 @@ export default {
 
   methods: {
     toggleVisible(e) {
-      console.log('I can click on icon', e);
+      // console.log('I can click on icon', e);
     },
 
     onSubmit() {
-      console.log('run onSubmit');
+      // console.log('run onSubmit');
       this.$store.dispatch('auth/SIGN_IN', this.form)
         .then(() => {
-          console.log('after sign in');
+          // console.log('after sign in');
           if (this.isAuthed) {
             this.$router.push({ name: 'password-table' });
           }

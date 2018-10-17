@@ -12,7 +12,7 @@ const hashCode = (s) => {
 
   if (l > 0) {
     while (i < l) {
-      h = ((h << 5) - h) + s.charCodeAt(i++) | 0; // eslint-disable-line no-bitwise
+      h = ((h << 2) - h) + s.charCodeAt(i++) | 0; // eslint-disable-line no-bitwise
     }
   }
   return h;
