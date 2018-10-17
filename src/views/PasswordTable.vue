@@ -68,6 +68,7 @@ export default {
       if (error) throw error;
       // console.log('storage', data);
       if (data.token && data.passphrase && data.gistId) {
+        api.setHeaders(data.token);
         this.passphrase = data.passphrase;
         this.gistId = data.gistId;
 
@@ -101,9 +102,10 @@ export default {
       // console.log(this.decode(encodedData, this.passphrase));
       const id = this.gistId;
       const gist = {
+        description: 'Test from my app',
         files: {
-          // [this.gistName]: { content: encodedData },
-          [this.gistName]: { content: '炼炜烅炔炂炕炑炎炄炂烅烝烅炠炈炈炀炋炂烅烋烅炂炊炆炎炋烅烝烅炔炆炉炀炃炓炏炧炀炊炆炎' },
+          [this.gistName]: { content: encodedData },
+          // newName: { content: '炼' },
         },
       };
       console.log(gist);
