@@ -1,6 +1,11 @@
 /* theme color */
 $--color-primary: #B50FCB !default;
 
+/* modify mini button */
+$--button-mini-padding-vertical: 4px;
+$--button-mini-padding-horizontal: 4px;
+$--button-mini-font-size: 11px;
+
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 

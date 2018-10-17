@@ -21,7 +21,7 @@ function createMainWindow() {
   const window = new BrowserWindow({
     height: 768,
     useContentSize: true,
-    width: 1280,
+    width: 1024,
     // frame: false,
     titleBarStyle: 'hidden',
   });

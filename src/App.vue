@@ -17,14 +17,17 @@
           <i class="el-icon-setting"></i>
           <span slot="title"> Settings</span>
         </el-menu-item>
+        <!--
         <el-menu-item index="/signin">
           <i class="el-icon-star-off"></i>
           <span slot="title"> Signin</span>
         </el-menu-item>
+        -->
       </el-menu>
     </el-aside>
 
     <el-container>
+      <!--
       <el-header style="text-align: right; font-size: 12px">
         <el-dropdown>
           <i class="el-icon-setting" style="margin-right: 15px"></i>
@@ -36,7 +39,7 @@
         </el-dropdown>
         <span>Tom</span>
       </el-header>
-
+      -->
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -89,5 +92,9 @@ body {
 }
 .can-not-select {
     -webkit-user-select: none;
+}
+
+.right {
+  float: right;
 }
 </style>
