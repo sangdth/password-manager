@@ -12,19 +12,6 @@
         :model="form"
         label-width="200px"
       >
-        <el-form-item label="Access token">
-          <el-input
-            v-model="form.token"
-            name="token"
-            type="password"
-          >
-            <i
-              slot="suffix"
-              class="el-input__icon el-icon-view toggle-icon"
-              @click="toggleVisible($event)"
-            ></i>
-          </el-input>
-        </el-form-item>
         <el-form-item label="Passphrase">
           <el-input
             v-model="form.passphrase"
@@ -32,16 +19,11 @@
             type="password"
           ></el-input>
         </el-form-item>
-        <el-form-item label="Gist ID">
-          <el-input
-            v-model="form.gistId"
-            name="gistId"
-            type="password"
-            :disabled="form.newGist"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="Generate new gist">
-          <el-switch v-model="form.newGist"></el-switch>
+        <el-form-item>
+          <el-checkbox
+            v-model="form.remember"
+            label="Remember me"
+          />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">Sign In</el-button>

@@ -80,9 +80,36 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+  font-weight: 400;
   -webkit-app-region: drag;
+  -webkit-font-smoothing: antialiased;
+  ::-webkit-scrollbar {
+    width: 15px;
+    height: 15px;
+    background: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    height: 0;
+    width: 0;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: #0000004d;
+    border: 5px solid #0000;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    min-height: 20px;
+    min-width: 20px;
+    height: 5px;
+    width: 5px;
+  }
 
   .side-menu {
     padding-top: 50px;

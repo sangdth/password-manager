@@ -6,7 +6,6 @@
       height="577"
       v-loading="loading"
       class="password-list"
-      border
     >
       <el-table-column
         prop="service"
@@ -221,8 +220,8 @@ export default {
 }
 .big-float {
   position: absolute;
-  bottom: 50px;
-  right: 50px;
+  bottom: 30px;
+  right: 30px;
   z-index: 99;
   padding: 30px;
 }
