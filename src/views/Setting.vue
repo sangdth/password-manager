@@ -1,22 +1,167 @@
 <template>
-  <section class="section">
-    <div class="container">
-      <h1 class="title can-not-select">Setting</h1>
-      <p class="subtitle can-not-select">This is place to build setting features.</p>
-    </div>
-  </section>
+  <div class="setting-wrapper">
+    <h3>Setting</h3>
+    <el-form
+      ref="settingForm"
+      :model="form"
+      label-width="150px"
+      label-position="left"
+    >
+      <el-row
+        :gutter="20"
+        type="flex"
+        justify="center"
+      >
+        <el-col :span="12">
+          <h5>Sync with Gist</h5>
+          <el-form-item label="Access token">
+            <el-input
+              v-model="form.token"
+              name="token"
+              type="password"
+            >
+              <i
+                slot="suffix"
+                class="el-input__icon el-icon-view toggle-icon"
+                @click="toggleVisible($event)"
+              ></i>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="Passphrase">
+            <el-input
+              v-model="form.passphrase"
+              name="passphrase"
+              type="password"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Gist ID">
+            <el-input
+              v-model="form.gistId"
+              name="gistId"
+              type="password"
+              :disabled="form.newGist"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="Generate new gist">
+            <el-switch v-model="form.newGist"></el-switch>
+          </el-form-item>
+          <transition name="el-zoom-in-top">
+          <el-form-item v-show="form.newGist" label="Gist Name">
+            <el-input
+              v-model="form.gistName"
+              name="gistName"
+              type="text"
+              :disabled="!form.newGist"
+              autofocus
+            ></el-input>
+          </el-form-item>
+          </transition>
+          <el-form-item>
+            <el-button
+              :disabled="!form.token.length"
+              type="primary"
+              @click="onSubmit"
+            >
+              Start Sync
+            </el-button>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+
+        </el-col>
+      </el-row>
+    </el-form>
+  </div>
 </template>
 
 <script>
+import storage from 'electron-json-storage';
+import { mapGetters } from 'vuex';
+// import simpleCrypto from '../common/simple.crypto';
+import errorHandler from '@/common/error.handler';
+
 export default {
+  name: 'SettingView',
+
   data() {
     return {
-
+      form: {
+        gistId: '',
+        token: '',
+        passphrase: '',
+        newGist: false,
+      },
     };
+  },
+
+  watch: {
+    form: {
+      handler() {
+        /*
+        if (this.form.newGist) {
+          this.form.gistId = '';
+        }
+        */
+      },
+      deep: true,
+    },
+  },
+
+  computed: {
+    ...mapGetters('auth', ['isAuthed']),
+    ...mapGetters('gist', ['rawData']),
+  },
+
+  created() {
+    storage.get('user-data', (error, data) => {
+      if (error) throw error;
+      // console.log('storage', data);
+      if (data.token) {
+        this.form.token = data.token;
+      }
+      if (data.passphrase) {
+        this.form.passphrase = data.passphrase;
+      }
+      if (data.gistId) {
+        this.form.gistId = data.gistId;
+      }
+    });
+  },
+
+  methods: {
+    toggleVisible(e) {
+      // console.log('I can click on icon', e);
+    },
+
+    onSubmit() {
+      // console.log('run onSubmit');
+      this.$store.dispatch('auth/SIGN_IN', this.form)
+        .then(() => {
+          // console.log('after sign in');
+          if (this.isAuthed) {
+            this.$router.push({ name: 'password-table' });
+          }
+        })
+        .catch((e) => {
+          errorHandler(e);
+        });
+    },
   },
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.header {
+  height: 200px;
+  padding-top: 10px;
 
+  .logo {
+    display: block;
+    width: 100px;
+    margin: 20px auto;
+  }
+}
+.toggle-icon {
+  cursor: pointer;
+}
 </style>
