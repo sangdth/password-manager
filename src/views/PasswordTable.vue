@@ -4,9 +4,11 @@
       <h3>Password List</h3>
       <el-table
         :data="passwords"
+        :row-class-name="selectedClass"
         height="577"
         v-loading="loading"
         class="password-list"
+        @row-click="handleRowClick"
       >
         <el-table-column
           prop="service"
@@ -127,7 +129,6 @@
 import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
 import api from '@/common/api.services';
-import simpleCrypto from '@/common/simple.crypto';
 import errorHandler from '@/common/error.handler';
 import SignInForm from '@/components/SignInForm';
 
@@ -150,6 +151,7 @@ export default {
       gistId: '',
       addRecordFormVisible: false,
       signInFormVisible: true,
+      selectedRow: {},
     };
   },
 
@@ -218,6 +220,18 @@ export default {
       this.loading = false;
     },
 
+    selectedClass({ row, rowIndex }) {
+      if (row === this.selectedRow) {
+        return 'success-row';
+      }
+      return '';
+    },
+
+    handleRowClick(row) {
+      this.selectedRow = row;
+      // console.log(row);
+    },
+
     openSetting() {
       this.onSetting = true;
     },
@@ -236,6 +250,7 @@ export default {
 .password-list {
   width: 100%;
 }
+
 .big-float {
   position: absolute;
   bottom: 30px;

@@ -105,4 +105,14 @@ html {
 .right {
   float: right;
 }
+
+.el-table {
+  .el-table__row {
+    cursor: pointer;
+
+    &.success-row {
+      background: #f0f9eb !important;
+    }
+  }
+}
 </style>
