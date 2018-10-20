@@ -1,16 +1,23 @@
 import storage from 'electron-json-storage';
 import api from '@/common/api.services';
 import errorHandler from '@/common/error.handler';
-import { SIGN_IN, SET_AUTH } from '@/store/types';
-// import simpleCrypto from '@/common/simple.crypto';
+import {
+  SIGN_IN,
+  SET_AUTH,
+  GET_USER_DATA,
+  SET_USER_DATA,
+  REMOVE_USER_DATA,
+} from '@/store/types';
 
 const state = {
   isAuthed: false,
+  userData: null,
   dummy: '',
 };
 
 const getters = {
   isAuthed: state => state.isAuthed,
+  userData: state => state.userData,
 };
 
 const actions = {
@@ -37,6 +44,36 @@ const actions = {
       errorHandler(e);
     }
   },
+
+  [GET_USER_DATA]({ commit }) {
+    return new Promise((resolve, reject) => {
+      storage.get('user-data', (error, data) => {
+        if (data.passphrase.length > 0) {
+          localStorage.setItem('first-time', 'false');
+          commit(SET_USER_DATA, data);
+          resolve({ data });
+        } else if (error) {
+          localStorage.setItem('first-time', 'true');
+          reject(new Error(error));
+        } else {
+          reject(new Error('[GET_USER_DATA] Something wrong.'));
+        }
+      });
+    });
+  },
+
+  [REMOVE_USER_DATA]({ commit }) {
+    return new Promise((resolve, reject) => {
+      storage.remove('user-data', (error) => {
+        if (error) {
+          reject(new Error(error));
+        } else {
+          commit(SET_USER_DATA, {});
+          resolve('Deleted!');
+        }
+      });
+    });
+  },
 };
 
 const mutations = {
@@ -44,28 +81,12 @@ const mutations = {
     console.log('run set auth');
     state.isAuthed = status;
   },
+
+  [SET_USER_DATA](state, userData) {
+    state.userData = userData;
+  },
 };
 
-/*
-if (formData.newGist) {
-  console.log('start dispatch new gist');
-  dispatch(
-    'gist/CREATE_GIST',
-    {
-      description: 'Data of Password Manager app',
-      public: false,
-      files: {
-        'Password Manager': {
-          content: simpleCrypto.encode('Hello World', formData.passphrase),
-        },
-      },
-    },
-    { root: true },
-  )
-    .then(res => res)
-    .catch(error => error);
-}
-*/
 export default {
   namespaced: true,
   getters,

@@ -8,7 +8,7 @@
       label-position="left"
     >
       <el-row
-        :gutter="20"
+        :gutter="40"
         type="flex"
         justify="center"
       >
@@ -67,12 +67,17 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
+          <h5>Reset</h5>
           <el-button
             type="danger"
-            @click="handleSignOut"
+            @click="handleReset"
+            plain
           >
-            Sign Out
+            Clear All Data and Reset
           </el-button>
+          <p class="warning">
+            Note: There is no way to get your data back, do with caution!
+          </p>
         </el-col>
       </el-row>
     </el-form>
@@ -80,10 +85,10 @@
 </template>
 
 <script>
-import storage from 'electron-json-storage';
+// import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
-// import simpleCrypto from '../common/simple.crypto';
 import errorHandler from '@/common/error.handler';
+import { GET_USER_DATA, REMOVE_USER_DATA } from '@/store/types';
 
 export default {
   name: 'SettingView',
@@ -113,28 +118,22 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['isAuthed']),
+    ...mapGetters('auth', ['userData']),
     ...mapGetters('gist', ['rawData']),
   },
 
   created() {
-    storage.get('user-data', (error, data) => {
-      if (error) throw error;
-      // console.log('storage', data);
-      if (data.token) {
-        this.form.token = data.token;
-      }
-      if (data.passphrase) {
-        this.form.passphrase = data.passphrase;
-      }
-      if (data.gistId) {
-        this.form.gistId = data.gistId;
-      }
-    });
+    this.$store.dispatch(`auth/${GET_USER_DATA}`)
+      .then((res) => {
+        console.log('res', res);
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
   },
 
   methods: {
-    toggleVisible(e) {
+    toggleVisible() {
       // console.log('I can click on icon', e);
     },
 
@@ -152,7 +151,26 @@ export default {
         });
     },
 
-    handleSignOut() {},
+    handleReset() {
+      this.$prompt('Please input your passphrase', 'Are you sure?', {
+        confirmButtonText: 'OK, Reset',
+        cancelButtonText: 'Cancel',
+      }).then(({ value }) => {
+        if (value === this.userData.passphrase) {
+          this.$store.dispatch(`auth/${REMOVE_USER_DATA}`).then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Reset finish!',
+            });
+          });
+        } else {
+          this.$message({
+            type: 'danger',
+            message: 'Wrong passphrase, please try again.',
+          });
+        }
+      });
+    },
   },
 };
 </script>
@@ -168,6 +186,12 @@ export default {
     margin: 20px auto;
   }
 }
+
+.warning {
+  font-size: 12px;
+  color: #EE0000;
+}
+
 .toggle-icon {
   cursor: pointer;
 }

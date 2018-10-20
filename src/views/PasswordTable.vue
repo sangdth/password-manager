@@ -120,8 +120,6 @@
     >
       <sign-in-form :visible.sync="signInFormVisible"/>
     </el-dialog>
-
-
   </div>
 </template>
 
@@ -161,8 +159,6 @@ export default {
   },
 
   created() {
-    const test = sessionStorage.getItem('user-data');
-    console.log(test);
     storage.get('user-data', (error, data) => {
       if (error) throw error;
       // console.log('storage', data);
@@ -185,25 +181,18 @@ export default {
   },
 
   methods: {
-    // encode(s, p) {
-    // return JSON.stringify(simpleCrypto.encode(s, p));
-    // },
     async handleAddRecord() {
       this.loading = true;
       this.passwords.push(this.form);
       const encodedData = this.$encode(this.passwords, this.passphrase);
-      // console.log(encodedData);
-      // console.log(this.decode(encodedData, this.passphrase));
       const id = this.gistId;
       const gist = {
         description: 'Test from my app',
         files: {
           [this.gistName]: { content: encodedData },
-          // newName: { content: '炼' },
         },
       };
-      // console.log(gist);
-      // why edit gist got 404?
+
       await this.$store.dispatch('gist/EDIT_GIST', { id, gist })
         .then((res) => {
           this.addRecordFormVisible = false;
@@ -217,10 +206,11 @@ export default {
         .catch((e) => {
           errorHandler(e);
         });
+
       this.loading = false;
     },
 
-    selectedClass({ row, rowIndex }) {
+    selectedClass({ row }) {
       if (row === this.selectedRow) {
         return 'success-row';
       }

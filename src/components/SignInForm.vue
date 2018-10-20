@@ -43,7 +43,6 @@
 <script>
 import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
-// import simpleCrypto from '../common/simple.crypto';
 import errorHandler from '@/common/error.handler';
 
 export default {
@@ -62,16 +61,6 @@ export default {
       },
 
       userData: {},
-
-      rules: {
-        passphrase: [
-          {
-            required: true,
-            message: 'Please enter passphrase',
-            trigger: 'blur',
-          },
-        ],
-      },
     };
   },
 
