@@ -67,7 +67,12 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-
+          <el-button
+            type="danger"
+            @click="handleSignOut"
+          >
+            Sign Out
+          </el-button>
         </el-col>
       </el-row>
     </el-form>
@@ -146,6 +151,8 @@ export default {
           errorHandler(e);
         });
     },
+
+    handleSignOut() {},
   },
 };
 </script>

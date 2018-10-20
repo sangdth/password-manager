@@ -1,59 +1,69 @@
 <template>
-  <div class="password-table">
-    <h3>Password List</h3>
-    <el-table
-      :data="passwords"
-      height="577"
-      v-loading="loading"
-      class="password-list"
-    >
-      <el-table-column
-        prop="service"
-        label="Services"
-        width="180"
-        sortable
+  <div class="home-wrapper">
+    <div v-if="!signInFormVisible" class="password-table">
+      <h3>Password List</h3>
+      <el-table
+        :data="passwords"
+        height="577"
+        v-loading="loading"
+        class="password-list"
       >
-      </el-table-column>
-      <el-table-column
-        prop="email"
-        label="Email"
-        sortable
-       >
-      </el-table-column>
-      <el-table-column
-        prop="password"
-        label="Password"
-      >
-        <template slot-scope="scope">
-          <span class="left">
-            {{ scope.row.password }}
-          </span>
-          <span class="right">
-            <el-button
-              size="mini"
-              type="success"
-              icon="el-icon-view"
-              @click="handleEdit(scope.$index, scope.row)"
-              plain
-            />
-            <el-button
-              size="mini"
-              type="info"
-              icon="el-icon-edit"
-              @click="handleEdit(scope.$index, scope.row)"
-              plain
-            />
-            <el-button
-              size="mini"
-              type="danger"
-              icon="el-icon-delete"
-              @click="handleDelete(scope.$index, scope.row)"
-              plain
-            />
-          </span>
-      </template>
-      </el-table-column>
-    </el-table>
+        <el-table-column
+          prop="service"
+          label="Services"
+          width="180"
+          sortable
+        >
+        </el-table-column>
+        <el-table-column
+          prop="email"
+          label="Email"
+          sortable
+         >
+        </el-table-column>
+        <el-table-column
+          prop="password"
+          label="Password"
+        >
+          <template slot-scope="scope">
+            <span class="left">
+              {{ scope.row.password }}
+            </span>
+            <span class="right">
+              <el-button
+                size="mini"
+                type="success"
+                icon="el-icon-view"
+                @click="handleEdit(scope.$index, scope.row)"
+                plain
+              />
+              <el-button
+                size="mini"
+                type="info"
+                icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)"
+                plain
+              />
+              <el-button
+                size="mini"
+                type="danger"
+                icon="el-icon-delete"
+                @click="handleDelete(scope.$index, scope.row)"
+                plain
+              />
+            </span>
+        </template>
+        </el-table-column>
+      </el-table>
+
+      <el-button
+        type="primary"
+        icon="el-icon-plus"
+        class="big-float"
+        @click="addRecordFormVisible = !addRecordFormVisible"
+        circle
+      />
+    </div>
 
     <!-- Dialog for add new record -->
     <el-dialog
@@ -95,13 +105,21 @@
         </el-form-item>
       </el-form>
     </el-dialog>
-    <el-button
-      type="primary"
-      icon="el-icon-plus"
-      class="big-float"
-      @click="addRecordFormVisible = !addRecordFormVisible"
-      circle
-    />
+
+    <!-- Dialog for sign in -->
+    <el-dialog
+      title="Enter Your Passphrase"
+      top="20vh"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :visible.sync="signInFormVisible"
+      center
+    >
+      <sign-in-form :visible.sync="signInFormVisible"/>
+    </el-dialog>
+
+
   </div>
 </template>
 
@@ -111,9 +129,12 @@ import { mapGetters } from 'vuex';
 import api from '@/common/api.services';
 import simpleCrypto from '@/common/simple.crypto';
 import errorHandler from '@/common/error.handler';
+import SignInForm from '@/components/SignInForm';
 
 export default {
   name: 'PasswordTable',
+
+  components: { SignInForm },
 
   data() {
     return {
@@ -128,6 +149,7 @@ export default {
       passphrase: '',
       gistId: '',
       addRecordFormVisible: false,
+      signInFormVisible: true,
     };
   },
 
@@ -137,6 +159,8 @@ export default {
   },
 
   created() {
+    const test = sessionStorage.getItem('user-data');
+    console.log(test);
     storage.get('user-data', (error, data) => {
       if (error) throw error;
       // console.log('storage', data);
@@ -150,10 +174,10 @@ export default {
           .then(() => {
             // We need somehow get the file name dynamically
             const encodedData = this.rawData.files[this.gistName].content;
-            this.passwords = this.decode(encodedData, data.passphrase);
+            this.passwords = this.$decode(encodedData, data.passphrase);
           });
       } else {
-        this.$router.push({ name: 'signin' });
+        this.signInFormVisible = true;
       }
     });
   },
@@ -162,16 +186,10 @@ export default {
     // encode(s, p) {
     // return JSON.stringify(simpleCrypto.encode(s, p));
     // },
-
-    decode(s, p) {
-      // console.log(simpleCrypto.decode(s, p));
-      return JSON.parse(simpleCrypto.decode(s, p));
-    },
-
     async handleAddRecord() {
       this.loading = true;
       this.passwords.push(this.form);
-      const encodedData = simpleCrypto.encode(JSON.stringify(this.passwords), this.passphrase);
+      const encodedData = this.$encode(this.passwords, this.passphrase);
       // console.log(encodedData);
       // console.log(this.decode(encodedData, this.passphrase));
       const id = this.gistId;

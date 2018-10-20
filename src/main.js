@@ -6,6 +6,7 @@ import App from './App';
 import router from './router';
 import store from './store';
 import api from './common/api.services';
+import simpleCrypto from './common/simple.crypto';
 import i18n from './common/i18n';
 import './plugins/element';
 
@@ -15,9 +16,13 @@ api.init();
 // read more at https://github.com/ElemeFE/element/issues/4720
 Vue.use(VeeValidate, { fieldsBagName: 'vFields' });
 Vue.use(VueClipboard);
+
+// Set up global encode and decode
+Vue.prototype.$encode = (s, p) => simpleCrypto.encode(JSON.stringify(s), p);
+Vue.prototype.$decode = (s, p) => JSON.parse(simpleCrypto.decode(s, p));
+
 Vue.config.productionTip = false;
 
-/* eslint-disable no-new */
 new Vue({
   router,
   store,
