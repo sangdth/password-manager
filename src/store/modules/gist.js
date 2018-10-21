@@ -1,4 +1,4 @@
-import storage from 'electron-json-storage';
+// import storage from 'electron-json-storage';
 import api from '../../common/api.services';
 import errorHandler from '../../common/error.handler';
 import {

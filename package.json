@@ -1,6 +1,9 @@
 {
   "name": "password-manager",
-  "version": "0.1.0",
+  "description": "Simple password manager for nerd",
+  "author": "Sang Dang <sangdth@gmail.com>",
+  "version": "3.0.0-beta-1",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,6 +20,8 @@
     "electron-json-storage": "^4.1.4",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.11",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
     "raven-js": "^3.27.0",
     "register-service-worker": "^1.0.0",
     "vee-validate": "^2.1.0-beta.11",
@@ -24,6 +29,7 @@
     "vue-axios": "^2.1.4",
     "vue-clipboard2": "^0.2.1",
     "vue-i18n": "^8.2.0",
+    "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },

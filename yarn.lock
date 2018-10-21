@@ -6902,6 +6902,16 @@ mocha@^5.2.0:
     mkdirp "0.5.1"
     supports-color "5.4.0"
 
+moment-duration-format@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.2.2.tgz#b957612de26016c9ad9eb6087c054573e5127779"
+  integrity sha1-uVdhLeJgFsmtnrYIfAVFc+USd3k=
+
+moment@^2.22.2:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
+  integrity sha1-PCV/mDn8DpP/UxSWMiOeuQeD/2Y=
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -10857,6 +10867,11 @@ vue-loader@^15.4.2:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-progressbar@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/vue-progressbar/-/vue-progressbar-0.7.5.tgz#414730892252b1e45582d4979dec93038e007f79"
+  integrity sha512-VeNG/inMsFbvdCTS7lJ1gjDAKSUZdqkhW9gS1tb0we1rqFKxR+BCEiVUgw5C84vODKb14M2GWHTw0WVdpoVg6g==
 
 vue-router@^3.0.1:
   version "3.0.1"

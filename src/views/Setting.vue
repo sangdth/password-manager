@@ -78,6 +78,8 @@
           <p class="warning">
             Note: There is no way to get your data back, do with caution!
           </p>
+          <hr class="ruler">
+          <p class="version"><small>v3.0-beta-1</small></p>
         </el-col>
       </el-row>
     </el-form>
@@ -195,7 +197,18 @@ export default {
   font-size: 12px;
   color: #EE0000;
 }
-
+.ruler {
+  margin: 20px auto;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.version {
+  font-size: 12px;
+  color: #CCC;
+  font-weight: bold;
+}
 .toggle-icon {
   cursor: pointer;
 }

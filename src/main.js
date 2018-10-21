@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VeeValidate from 'vee-validate';
 import VueClipboard from 'vue-clipboard2';
+import VueProgressbar from 'vue-progressbar';
 
 import App from './App';
 import router from './router';
@@ -16,6 +17,9 @@ api.init();
 // read more at https://github.com/ElemeFE/element/issues/4720
 Vue.use(VeeValidate, { fieldsBagName: 'vFields' });
 Vue.use(VueClipboard);
+Vue.use(VueProgressbar, {
+  thickness: '4px',
+});
 
 // Set up global encode and decode
 Vue.prototype.$encode = (s, p) => simpleCrypto.encode(JSON.stringify(s), p);
