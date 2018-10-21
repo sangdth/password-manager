@@ -51,8 +51,6 @@ yarn electron:build
 
 ## Calling for HELP! 
 
-I'm a graphic designer [(click to see my portfolio,)](https://www.behance.net/sangdth) but unlike many others, I never formally trained at a school. Instead, I learned my skills through observation, self-directed study and work experience from 2004.
-
 You can do anything, mentor, find bugs, raise issue, folk, create pull request, or even drop me a message at Twitter [@sangdth](https://twitter.com/sangdth), you are more than welcome.
 
 ## License
