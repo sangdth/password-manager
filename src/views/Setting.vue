@@ -88,7 +88,7 @@
 // import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
 import errorHandler from '@/common/error.handler';
-import { GET_USER_DATA, REMOVE_USER_DATA } from '@/store/types';
+import { GET_USER_DATA, CLEAR_ALL_DATA } from '@/store/types';
 
 export default {
   name: 'SettingView',
@@ -154,14 +154,18 @@ export default {
     handleReset() {
       this.$prompt('Please input your passphrase', 'Are you sure?', {
         confirmButtonText: 'OK, Reset',
+        confirmButtonClass: 'el-button--danger',
         cancelButtonText: 'Cancel',
+        inputType: 'password',
       }).then(({ value }) => {
         if (value === this.userData.passphrase) {
-          this.$store.dispatch(`auth/${REMOVE_USER_DATA}`).then(() => {
+          this.$store.dispatch(`auth/${CLEAR_ALL_DATA}`).then(() => {
             this.$message({
               type: 'success',
               message: 'Reset finish!',
             });
+
+            this.$router.push({ name: 'password-table' });
           });
         } else {
           this.$message({

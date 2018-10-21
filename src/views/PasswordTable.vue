@@ -125,9 +125,10 @@
 
 <script>
 import storage from 'electron-json-storage';
+import { isEmpty } from 'lodash';
 import { mapGetters } from 'vuex';
-import api from '@/common/api.services';
-import errorHandler from '@/common/error.handler';
+// import api from '@/common/api.services';
+// import errorHandler from '@/common/error.handler';
 import SignInForm from '@/components/SignInForm';
 
 export default {
@@ -138,7 +139,8 @@ export default {
   data() {
     return {
       loading: false,
-      passwords: [],
+      userData: null,
+      localPasswords: {},
       form: {
         service: '',
         email: '',
@@ -156,58 +158,52 @@ export default {
   computed: {
     ...mapGetters('auth', ['isAuthed']),
     ...mapGetters('gist', ['rawData']),
+
+    passwords() {
+      // convert object data to array so table can display
+      if (!isEmpty(this.localPasswords)) {
+        const tempArray = [];
+        const entries = Object.entries(this.localPasswords);
+        for (let i = 0; i < entries.length; i++) {
+          tempArray.push(entries[i][1]);
+        }
+        return tempArray;
+      }
+      return [];
+    },
   },
 
   created() {
-    storage.get('user-data', (error, data) => {
+    storage.getMany(['user-data', 'local-passwords'], (error, data) => {
       if (error) throw error;
-      // console.log('storage', data);
-      if (data.token && data.passphrase && data.gistId) {
-        api.setHeaders(data.token);
-        this.passphrase = data.passphrase;
-        this.gistId = data.gistId;
-
-        this.$store.commit('auth/SET_AUTH', true);
-        this.$store.dispatch('gist/GET_GIST', data.gistId)
-          .then(() => {
-            // We need somehow get the file name dynamically
-            const encodedData = this.rawData.files[this.gistName].content;
-            this.passwords = this.$decode(encodedData, data.passphrase);
-          });
-      } else {
-        this.signInFormVisible = true;
-      }
+      console.log('data', data);
+      // get data
+      this.userData = data['user-data'];
+      this.localPasswords = data['local-passwords'];
     });
   },
 
   methods: {
     async handleAddRecord() {
-      this.loading = true;
-      this.passwords.push(this.form);
-      const encodedData = this.$encode(this.passwords, this.passphrase);
-      const id = this.gistId;
-      const gist = {
-        description: 'Test from my app',
-        files: {
-          [this.gistName]: { content: encodedData },
-        },
+      const encodedItem = {
+        service: this.form.service,
+        email: this.form.email,
+        password: this.$encode(this.form.password, this.userData.passphrase),
       };
 
-      await this.$store.dispatch('gist/EDIT_GIST', { id, gist })
-        .then((res) => {
-          this.addRecordFormVisible = false;
-          this.$message({
-            type: 'success',
-            message: 'Updated data successfully!',
-            showClose: true,
-          });
-          console.log('add record', res);
-        })
-        .catch((e) => {
-          errorHandler(e);
-        });
+      // this.localPasswords[this.form.service] = encodedItem;
+      this.$set(this.localPasswords, this.form.service, encodedItem);
 
-      this.loading = false;
+      this.loading = true;
+      storage.set(
+        'local-passwords',
+        JSON.stringify(this.localPasswords),
+        (error) => {
+          if (error) throw error;
+          this.loading = false;
+          this.addRecordFormVisible = false;
+        },
+      );
     },
 
     selectedClass({ row }) {
@@ -234,6 +230,43 @@ export default {
     handleDelete() {},
   },
 };
+
+/* Save for future use
+api.setHeaders(data.token);
+this.passphrase = data.passphrase;
+this.gistId = data.gistId;
+
+this.$store.commit('auth/SET_AUTH', true);
+this.$store.dispatch('gist/GET_GIST', data.gistId)
+  .then(() => {
+    // We need somehow get the file name dynamically
+    const encodedData = this.rawData.files[this.gistName].content;
+    this.passwords = this.$decode(encodedData, data.passphrase);
+  });
+
+const encodedData = this.$encode(this.passwords, this.passphrase);
+const id = this.gistId;
+const gist = {
+  description: 'Test from my app',
+  files: {
+    [this.gistName]: { content: encodedData },
+  },
+};
+
+await this.$store.dispatch('gist/EDIT_GIST', { id, gist })
+  .then((res) => {
+    this.addRecordFormVisible = false;
+    this.$message({
+      type: 'success',
+      message: 'Updated data successfully!',
+      showClose: true,
+    });
+    console.log('add record', res);
+  })
+  .catch((e) => {
+    errorHandler(e);
+  });
+*/
 </script>
 
 <style lang="scss" scoped>

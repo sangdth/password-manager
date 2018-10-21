@@ -23,6 +23,7 @@
             type="password"
             placeholder="Passphrase"
             @keyup.enter.native="handleSignIn"
+            autofocus
           />
         </el-form-item>
         <el-form-item>
@@ -53,6 +54,7 @@ export default {
   data() {
     return {
       isWrong: true,
+      firstTime: null,
       form: {
         gistId: '',
         token: '',
@@ -83,24 +85,45 @@ export default {
   },
 
   created() {
-    storage.get('user-data', (error, data) => {
-      if (error) throw error;
+    storage.has('user-data', (e1, hasKey) => {
+      if (e1) throw e1;
 
-      if (data.passphrase) {
-        localStorage.setItem('first-time', 'false');
-        this.userData = data;
+      if (hasKey) {
+        // if we have key, try to get data from it
+        storage.get('user-data', (e2, data) => {
+          if (e2) throw e2;
+
+          if (data.passphrase) {
+            localStorage.setItem('first-time', 'false');
+            this.firstTime = false;
+            this.userData = data;
+          }
+        });
       } else {
+        // If does not have key, we init
         localStorage.setItem('first-time', 'true');
+        this.firstTime = true;
       }
-
-      this.userData = data;
     });
   },
 
   methods: {
     handleSignIn() {
-      // we need to encode the passphrase in future
-      if (this.form.passphrase === this.userData.passphrase) {
+      if (this.firstTime) {
+        storage.set('user-data', {
+          passphrase: this.form.passphrase,
+        }, (e3) => {
+          if (e3) throw e3;
+
+          this.$message({
+            type: 'success',
+            message: 'Passphrase was set! New database was initiated!',
+            showClose: true,
+          });
+          this.$emit('update:visible', false);
+        });
+      } else if (this.form.passphrase === this.userData.passphrase) {
+        // we need to encode the passphrase in future
         this.$message({
           type: 'success',
           message: 'Welcome back!',

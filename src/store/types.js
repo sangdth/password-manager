@@ -1,6 +1,8 @@
+
 export const GET_USER_DATA = 'GET_USER_DATA';
 export const SET_USER_DATA = 'SET_USER_DATA';
 export const REMOVE_USER_DATA = 'REMOVE_USER_DATA';
+export const CLEAR_ALL_DATA = 'CLEAR_ALL_DATA';
 export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SET_AUTH = 'SET_AUTH';

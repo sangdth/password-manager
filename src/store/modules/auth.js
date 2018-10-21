@@ -7,6 +7,7 @@ import {
   GET_USER_DATA,
   SET_USER_DATA,
   REMOVE_USER_DATA,
+  CLEAR_ALL_DATA,
 } from '@/store/types';
 
 const state = {
@@ -28,7 +29,6 @@ const actions = {
       storage.set('user-data', formData, e => e);
 
       if (formData.gistId.length > 0 && setHead.success) {
-        // console.log('start dispatch');
         await dispatch('gist/GET_GIST', formData.gistId, { root: true })
           .then((response) => {
             if (response.status === 200) {
@@ -70,6 +70,19 @@ const actions = {
         } else {
           commit(SET_USER_DATA, {});
           resolve('Deleted!');
+        }
+      });
+    });
+  },
+
+  [CLEAR_ALL_DATA]({ commit }) {
+    return new Promise((resolve, reject) => {
+      storage.clear((error) => {
+        if (error) {
+          reject(new Error(error));
+        } else {
+          commit(SET_USER_DATA, {});
+          resolve('Cleared!');
         }
       });
     });
