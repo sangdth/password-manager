@@ -29,14 +29,14 @@
         >
           <template slot-scope="scope">
             <span class="left">
-              {{ scope.row.password }}
+              {{ scope.row.password | coverPassword(flag) }}
             </span>
             <span class="right">
               <el-button
                 size="mini"
                 type="success"
                 icon="el-icon-view"
-                @click="handleEdit(scope.$index, scope.row)"
+                @click="flag = !flag"
                 plain
               />
               <el-button
@@ -127,6 +127,7 @@
 import storage from 'electron-json-storage';
 import { isEmpty } from 'lodash';
 import { mapGetters } from 'vuex';
+import coverPassword from '@/filters/cover-password';
 // import api from '@/common/api.services';
 // import errorHandler from '@/common/error.handler';
 import SignInForm from '@/components/SignInForm';
@@ -135,6 +136,8 @@ export default {
   name: 'PasswordTable',
 
   components: { SignInForm },
+
+  filters: { coverPassword },
 
   data() {
     return {
@@ -152,6 +155,7 @@ export default {
       addRecordFormVisible: false,
       signInFormVisible: true,
       selectedRow: {},
+      flag: true,
     };
   },
 
@@ -174,16 +178,24 @@ export default {
   },
 
   created() {
-    storage.getMany(['user-data', 'local-passwords'], (error, data) => {
-      if (error) throw error;
-      console.log('data', data);
-      // get data
-      this.userData = data['user-data'];
-      this.localPasswords = data['local-passwords'];
-    });
+    this.getAllData();
+  },
+
+  updated() {
+    this.getAllData();
   },
 
   methods: {
+    getAllData() {
+      storage.getMany(['user-data', 'local-passwords'], (error, data) => {
+        if (error) throw error;
+        // get data
+        this.userData = data['user-data'];
+
+        this.localPasswords = data['local-passwords'];
+      });
+    },
+
     async handleAddRecord() {
       const encodedItem = {
         service: this.form.service,
@@ -197,7 +209,7 @@ export default {
       this.loading = true;
       storage.set(
         'local-passwords',
-        JSON.stringify(this.localPasswords),
+        this.localPasswords,
         (error) => {
           if (error) throw error;
           this.loading = false;
