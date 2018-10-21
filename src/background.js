@@ -22,6 +22,7 @@ function createWindow() {
     titleBarStyle: 'hidden',
   });
 
+
   if (isDevelopment) {
     // Load the url of the dev server if in development mode
     win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);

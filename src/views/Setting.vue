@@ -79,7 +79,7 @@
             Note: There is no way to get your data back, do with caution!
           </p>
           <hr class="ruler">
-          <p class="version"><small>v3.0-beta-1</small></p>
+          <p class="version"><small>v3.0-beta.1</small></p>
         </el-col>
       </el-row>
     </el-form>
