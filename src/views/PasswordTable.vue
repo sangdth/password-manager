@@ -29,7 +29,7 @@
         >
           <template slot-scope="scope">
             <span class="left">
-              {{ scope.row.password | coverPassword(flag) }}
+              {{ coverPassword(scope.row.password) }}
             </span>
             <span class="right">
               <el-button
@@ -127,7 +127,6 @@
 import storage from 'electron-json-storage';
 import { isEmpty } from 'lodash';
 import { mapGetters } from 'vuex';
-import coverPassword from '@/filters/cover-password';
 // import api from '@/common/api.services';
 // import errorHandler from '@/common/error.handler';
 import SignInForm from '@/components/SignInForm';
@@ -136,8 +135,6 @@ export default {
   name: 'PasswordTable',
 
   components: { SignInForm },
-
-  filters: { coverPassword },
 
   data() {
     return {
@@ -225,9 +222,23 @@ export default {
       return '';
     },
 
+    coverPassword(p) {
+      if (this.flag) {
+        return '**************';
+      }
+      return this.$decode(p, this.userData.passphrase);
+    },
+
     handleRowClick(row) {
       this.selectedRow = row;
-      // console.log(row);
+      this.$copyText(this.$decode(row.password, this.userData.passphrase))
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Password copied!',
+            showClose: true,
+          });
+        });
     },
 
     openSetting() {
