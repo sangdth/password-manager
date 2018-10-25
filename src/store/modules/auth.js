@@ -49,11 +49,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       storage.get('user-data', (error, data) => {
         if (data.passphrase.length > 0) {
-          localStorage.setItem('first-time', 'false');
           commit(SET_USER_DATA, data);
           resolve({ data });
         } else if (error) {
-          localStorage.setItem('first-time', 'true');
           reject(new Error(error));
         } else {
           reject(new Error('[GET_USER_DATA] Something wrong.'));

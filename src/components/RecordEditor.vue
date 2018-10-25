@@ -1,82 +1,105 @@
 <template>
-  <el-dialog
-    :title="dialogTitle"
-    :visible.sync="visible"
+  <el-form
+    :model="data"
+    :label-position="'right'"
+    label-width="80px"
+    @keyup.enter.native="submit"
   >
-    <el-form
-      :model="form"
-      :label-position="'right'"
-      label-width="80px"
-      @keyup.enter.native="handleAddRecord"
-    >
-      <el-form-item label="Service">
-        <el-input
-          v-model="form.service"
-          placeholder="Service"
-        />
-      </el-form-item>
-      <el-form-item label="Email">
-        <el-input
-          v-model="form.email"
-          placeholder="Email"
-        />
-      </el-form-item>
-      <el-form-item label="Password">
-        <el-input
-          v-model="form.password"
-          type="password"
-          placeholder="Password"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button
-          :loading="loading"
-          type="primary"
-          @click="handleAddRecord"
-        >
-          Add New Record
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </el-dialog>
+    <el-form-item label="Service">
+      <el-input
+        v-model="data.service"
+        placeholder="Service"
+      />
+    </el-form-item>
+    <el-form-item label="Email">
+      <el-input
+        v-model="data.email"
+        placeholder="Email"
+      />
+    </el-form-item>
+    <el-form-item label="Password">
+      <el-input
+        v-model="data.password"
+        type="password"
+        placeholder="Password"
+      />
+    </el-form-item>
+    <el-form-item>
+      <el-button
+        :loading="loading"
+        type="primary"
+        @click="onSubmit"
+      >
+        {{ isNew ? 'Add New Record' : 'Edit Record' }}
+      </el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
-import { isEmpty } from 'lodash';
+import storage from 'electron-json-storage';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'RecordEditor',
 
   props: {
+    isNew: Boolean,
     visible: Boolean,
-    formData: Object,
+    data: Object,
   },
 
   data() {
     return {
-      form: {
-        id: '',
-        service: '',
-        email: '',
-        password: '',
-      },
       loading: false,
     };
   },
 
   computed: {
-    isNew() {
-      return isEmpty(this.formData);
-    },
-
-    dialogTitle() {
-      return (this.isNew ? 'Add New Record' : 'Edit Record');
-    },
+    ...mapGetters('database', ['localPasswords']),
+    ...mapGetters('auth', ['userData']),
   },
 
   methods: {
-    handleAddRecord() {
-      console.log('Added!');
+    uuid() {
+      return `-${Math.random().toString(36).substr(2, 9)}`;
+    },
+
+    onSubmit() {
+      if (this.isNew) {
+        this.handleAddNew();
+      } else {
+        this.handleUpdate();
+      }
+    },
+
+    handleUpdate() {
+
+    },
+
+    handleAddNew() {
+      const uuid = this.data.service.toLowerCase() + this.uuid();
+      const encodedItem = {
+        id: uuid,
+        service: this.data.service,
+        email: this.data.email,
+        password: this.$encode(this.data.password, this.userData.passphrase),
+      };
+
+      const tempObj = Object.assign({}, this.localPasswords);
+      tempObj.uuid = encodedItem;
+
+      this.loading = true;
+      storage.set(
+        'local-passwords',
+        tempObj,
+        (error) => {
+          if (error) throw error;
+          this.loading = false;
+          this.$emit('update:visible', false);
+          this.$store.dispatch('database/GET_PASSWORDS');
+        },
+      );
     },
   },
 };

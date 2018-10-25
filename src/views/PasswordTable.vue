@@ -51,7 +51,7 @@
                 size="mini"
                 type="info"
                 icon="el-icon-edit"
-                @click="handleEditRecord(scope.row)"
+                @click="handleEdit(scope.row)"
                 plain
               />
               <el-button
@@ -70,51 +70,21 @@
         type="primary"
         icon="el-icon-plus"
         class="big-float"
-        @click="addRecordFormVisible = !addRecordFormVisible"
+        @click="handleAdd"
         circle
       />
     </div>
 
-    <!-- Dialog for add new record -->
+    <!-- Dialog for add new/edit record -->
     <el-dialog
-      title="Add New Record"
-      :visible.sync="addRecordFormVisible"
+      title="Record Editor"
+      :visible.sync="recordEditorVisible"
     >
-      <el-form
-        :model="form"
-        :label-position="'right'"
-        label-width="80px"
-        @keyup.enter.native="handleAddRecord"
-      >
-        <el-form-item label="Service">
-          <el-input
-            v-model="form.service"
-            placeholder="Service"
-          />
-        </el-form-item>
-        <el-form-item label="Email">
-          <el-input
-            v-model="form.email"
-            placeholder="Email"
-          />
-        </el-form-item>
-        <el-form-item label="Password">
-          <el-input
-            v-model="form.password"
-            type="password"
-            placeholder="Password"
-          />
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            :loading="loading"
-            type="primary"
-            @click="handleAddRecord"
-          >
-            Add New Record
-          </el-button>
-        </el-form-item>
-      </el-form>
+      <record-editor
+        :visible.sync="recordEditorVisible"
+        :is-new="isNew"
+        :data="form"
+      />
     </el-dialog>
 
     <!-- Dialog for sign in -->
@@ -128,7 +98,6 @@
       center
     >
       <sign-in-form :visible.sync="signInFormVisible"/>
-      <record-editor :visible.sync="signInFormVisible"/>
     </el-dialog>
   </div>
 </template>
@@ -161,7 +130,9 @@ export default {
       gistName: 'v9fhSnk@Y*xUK6udP16tmD*V9fKF',
       passphrase: '',
       gistId: '',
-      addRecordFormVisible: false,
+      isNew: false,
+      addRecordFormVisible: false, // #
+      recordEditorVisible: false,
       signInFormVisible: true,
       selectedRow: {},
       flag: false,
@@ -194,7 +165,9 @@ export default {
   },
 
   created() {
-    this.getAllData();
+    // this.getAllData();
+    this.$store.dispatch('database/GET_PASSWORDS');
+    this.$store.dispatch('auth/GET_USER_DATA');
   },
 
   methods: {
@@ -208,42 +181,6 @@ export default {
       });
     },
 
-    handleAddRecord() {
-      const uuid = this.form.service.toLowerCase() + this.uuid();
-      const encodedItem = {
-        id: uuid,
-        service: this.form.service,
-        email: this.form.email,
-        password: this.$encode(this.form.password, this.userData.passphrase),
-      };
-
-      // this.localPasswords[this.form.service] = encodedItem;
-      this.$set(this.localPasswords, uuid, encodedItem);
-
-      this.loading = true;
-      storage.set(
-        'local-passwords',
-        this.localPasswords,
-        (error) => {
-          if (error) throw error;
-          this.loading = false;
-          this.addRecordFormVisible = false;
-          this.form = {
-            id: '',
-            service: '',
-            email: '',
-            password: '',
-          };
-          this.getAllData();
-        },
-      );
-    },
-
-    handleEditRecord() {
-      // under development
-      // need to make the dialog stand out
-      // and act like editor
-    },
 
     selectedClass({ row }) {
       if (row === this.selectedRow) {
@@ -304,11 +241,17 @@ export default {
       this.onSetting = false;
     },
 
-    uuid() {
-      return `-${Math.random().toString(36).substr(2, 9)}`;
+    handleAdd() {
+      this.recordEditorVisible = !this.recordEditorVisible;
+      this.isNew = true;
+      this.form = {};
     },
 
-    handleEdit() {},
+    handleEdit(record) {
+      this.recordEditorVisible = !this.recordEditorVisible;
+      this.isNew = false;
+      this.form = record;
+    },
 
     handleDelete(row) {
       this.$prompt('Please input your passphrase', 'Are you sure?', {

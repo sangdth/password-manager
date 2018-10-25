@@ -7,6 +7,10 @@ export const SIGN_IN = 'SIGN_IN';
 export const SIGN_OUT = 'SIGN_OUT';
 export const SET_AUTH = 'SET_AUTH';
 
+// ##### Passwords in local database
+export const GET_PASSWORDS = 'GET_PASSWORDS';
+export const SET_PASSWORDS = 'SET_PASSWORDS';
+
 // ##### Gist
 export const CREATE_GIST = 'CREATE_GIST';
 export const EDIT_GIST = 'EDIT_GIST';
