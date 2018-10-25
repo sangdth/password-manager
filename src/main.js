@@ -26,6 +26,8 @@ Vue.prototype.$encode = (s, p) => simpleCrypto.encode(JSON.stringify(s), p);
 Vue.prototype.$decode = (s, p) => JSON.parse(simpleCrypto.decode(s, p));
 
 Vue.config.productionTip = false;
+Vue.config.devtools = true;
+Vue.config.performance = true;
 
 new Vue({
   router,

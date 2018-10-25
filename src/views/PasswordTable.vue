@@ -128,6 +128,7 @@
       center
     >
       <sign-in-form :visible.sync="signInFormVisible"/>
+      <record-editor :visible.sync="signInFormVisible"/>
     </el-dialog>
   </div>
 </template>
@@ -139,11 +140,12 @@ import { mapGetters } from 'vuex';
 // import api from '@/common/api.services';
 // import errorHandler from '@/common/error.handler';
 import SignInForm from '@/components/SignInForm';
+import RecordEditor from '@/components/RecordEditor';
 
 export default {
   name: 'PasswordTable',
 
-  components: { SignInForm },
+  components: { SignInForm, RecordEditor },
 
   data() {
     return {
