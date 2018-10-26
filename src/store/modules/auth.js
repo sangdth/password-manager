@@ -11,7 +11,7 @@ import {
 
 const state = {
   isAuthed: false,
-  userData: null,
+  userData: {},
   dummy: '',
 };
 
@@ -24,7 +24,8 @@ const actions = {
   [GET_USER_DATA]({ commit }) {
     return new Promise((resolve, reject) => {
       storage.get('user-data', (error, data) => {
-        if (data.passphrase.length > 0) {
+        if (data.passphrase) {
+          console.log(data);
           commit(SET_USER_DATA, data);
           resolve(data);
         } else if (error) {

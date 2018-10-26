@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       isWrong: true,
-      firstTime: null,
+      firstTime: true,
       form: {
         passphrase: '',
       },
@@ -68,7 +68,7 @@ export default {
   created() {
     this.$store.dispatch('auth/GET_USER_DATA')
       .then((data) => {
-        this.firstTime = Boolean(data.passphrase);
+        this.firstTime = false;
       });
   },
 
@@ -82,6 +82,8 @@ export default {
           { passphrase: this.form.passphrase },
           (error) => {
             if (error) throw error;
+
+            this.$store.dispatch('auth/GET_USER_DATA');
 
             this.$message({
               type: 'success',

@@ -6,7 +6,7 @@ import {
 } from '@/store/types';
 
 const state = {
-  localPasswords: {},
+  localPasswords: null,
 };
 
 const getters = {

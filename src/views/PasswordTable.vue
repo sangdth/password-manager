@@ -119,7 +119,6 @@ export default {
   data() {
     return {
       loading: false,
-      userData: null,
       form: {
         id: '',
         service: '',
@@ -140,8 +139,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('auth', ['isAuthed']),
-    ...mapGetters('gist', ['rawData']),
+    ...mapGetters('auth', ['userData']),
     ...mapGetters('database', ['localPasswords']),
 
     passwords() {
@@ -250,6 +248,7 @@ export default {
             (error) => {
               if (error) throw error;
 
+              this.$store.dispatch('database/GET_PASSWORDS');
               this.loading = false;
               this.$message({
                 type: 'success',
