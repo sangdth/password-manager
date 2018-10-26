@@ -87,7 +87,7 @@ export default {
       };
 
       const tempObj = Object.assign({}, this.localPasswords);
-      tempObj.uuid = encodedItem;
+      tempObj[uuid] = encodedItem;
 
       this.loading = true;
       storage.set(

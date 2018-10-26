@@ -44,7 +44,7 @@
 <script>
 import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
-import errorHandler from '@/common/error.handler';
+// import errorHandler from '@/common/error.handler';
 
 export default {
   name: 'SigninForm',
@@ -56,73 +56,43 @@ export default {
       isWrong: true,
       firstTime: null,
       form: {
-        gistId: '',
-        token: '',
         passphrase: '',
-        newGist: false,
       },
-
-      userData: {},
     };
   },
 
-  watch: {
-    form: {
-      handler() {
-        /*
-        if (this.form.newGist) {
-          this.form.gistId = '';
-        }
-        */
-      },
-      deep: true,
-    },
-  },
-
   computed: {
-    ...mapGetters('auth', ['isAuthed']),
-    ...mapGetters('gist', ['rawData']),
+    ...mapGetters('auth', ['userData']),
   },
 
   created() {
-    storage.has('user-data', (e1, hasKey) => {
-      if (e1) throw e1;
-
-      if (hasKey) {
-        // if we have key, try to get data from it
-        storage.get('user-data', (e2, data) => {
-          if (e2) throw e2;
-
-          if (data.passphrase) {
-            localStorage.setItem('first-time', 'false');
-            this.firstTime = false;
-            this.userData = data;
-          }
-        });
-      } else {
-        // If does not have key, we init
-        localStorage.setItem('first-time', 'true');
-        this.firstTime = true;
-      }
-    });
+    this.$store.dispatch('auth/GET_USER_DATA')
+      .then((data) => {
+        this.firstTime = Boolean(data.passphrase);
+      });
   },
 
   methods: {
     handleSignIn() {
+      console.log('start submit sign in');
       if (this.firstTime) {
-        storage.set('user-data', {
-          passphrase: this.form.passphrase,
-        }, (e3) => {
-          if (e3) throw e3;
+        console.log('first time use, create new db');
+        storage.set(
+          'user-data',
+          { passphrase: this.form.passphrase },
+          (error) => {
+            if (error) throw error;
 
-          this.$message({
-            type: 'success',
-            message: 'Passphrase was set! New database was initiated!',
-            showClose: true,
-          });
-          this.$emit('update:visible', false);
-        });
+            this.$message({
+              type: 'success',
+              message: 'Passphrase was set! New database was initiated!',
+              showClose: true,
+            });
+            this.$emit('update:visible', false);
+          },
+        );
       } else if (this.form.passphrase === this.userData.passphrase) {
+        console.log('passphrase is ok, login...');
         // we need to encode the passphrase in future
         this.$message({
           type: 'success',
@@ -137,20 +107,6 @@ export default {
           showClose: true,
         });
       }
-    },
-
-    onSubmit() {
-      // console.log('run onSubmit');
-      this.$store.dispatch('auth/SIGN_IN', this.form)
-        .then(() => {
-          // console.log('after sign in');
-          if (this.isAuthed) {
-            this.$router.push({ name: 'password-table' });
-          }
-        })
-        .catch((e) => {
-          errorHandler(e);
-        });
     },
   },
 };

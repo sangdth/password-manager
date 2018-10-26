@@ -1,8 +1,7 @@
 import storage from 'electron-json-storage';
-import api from '@/common/api.services';
-import errorHandler from '@/common/error.handler';
+// import api from '@/common/api.services';
+// import errorHandler from '@/common/error.handler';
 import {
-  SIGN_IN,
   SET_AUTH,
   GET_USER_DATA,
   SET_USER_DATA,
@@ -22,35 +21,12 @@ const getters = {
 };
 
 const actions = {
-  async [SIGN_IN]({ commit, dispatch }, formData) {
-    try {
-      const setHead = await api.setHeaders(formData.token);
-
-      storage.set('user-data', formData, e => e);
-
-      if (formData.gistId.length > 0 && setHead.success) {
-        await dispatch('gist/GET_GIST', formData.gistId, { root: true })
-          .then((response) => {
-            if (response.status === 200) {
-              commit(SET_AUTH, true);
-            }
-            return response;
-          })
-          .catch((e) => {
-            errorHandler(e);
-          });
-      }
-    } catch (e) {
-      errorHandler(e);
-    }
-  },
-
   [GET_USER_DATA]({ commit }) {
     return new Promise((resolve, reject) => {
       storage.get('user-data', (error, data) => {
         if (data.passphrase.length > 0) {
           commit(SET_USER_DATA, data);
-          resolve({ data });
+          resolve(data);
         } else if (error) {
           reject(new Error(error));
         } else {

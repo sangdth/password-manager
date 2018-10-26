@@ -120,7 +120,6 @@ export default {
     return {
       loading: false,
       userData: null,
-      localPasswords: {},
       form: {
         id: '',
         service: '',
@@ -143,6 +142,7 @@ export default {
   computed: {
     ...mapGetters('auth', ['isAuthed']),
     ...mapGetters('gist', ['rawData']),
+    ...mapGetters('database', ['localPasswords']),
 
     passwords() {
       // convert object data to array so table can display
@@ -158,30 +158,12 @@ export default {
     },
   },
 
-  watch: {
-    signInFormVisible() {
-      this.getAllData();
-    },
-  },
-
   created() {
-    // this.getAllData();
     this.$store.dispatch('database/GET_PASSWORDS');
     this.$store.dispatch('auth/GET_USER_DATA');
   },
 
   methods: {
-    getAllData() {
-      storage.getMany(['user-data', 'local-passwords'], (error, data) => {
-        if (error) throw error;
-        // get data
-        this.userData = data['user-data'];
-
-        this.localPasswords = data['local-passwords'];
-      });
-    },
-
-
     selectedClass({ row }) {
       if (row === this.selectedRow) {
         return 'success-row';
@@ -269,7 +251,6 @@ export default {
               if (error) throw error;
 
               this.loading = false;
-              this.getAllData();
               this.$message({
                 type: 'success',
                 message: 'Record deleted!',
