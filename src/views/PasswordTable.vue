@@ -51,7 +51,7 @@
                 size="mini"
                 type="info"
                 icon="el-icon-edit"
-                @click="handleEdit(scope.row)"
+                @click="editButtonClick(scope.row)"
                 plain
               />
               <el-button
@@ -83,7 +83,8 @@
       <record-editor
         :visible.sync="recordEditorVisible"
         :is-new="isNew"
-        :data="form"
+        :record-id="selectedRow.id"
+        @submit="handleSubmitRecord"
       />
     </el-dialog>
 
@@ -162,6 +163,10 @@ export default {
   },
 
   methods: {
+    uuid() {
+      return `-${Math.random().toString(36).substr(2, 9)}`;
+    },
+
     selectedClass({ row }) {
       if (row === this.selectedRow) {
         return 'success-row';
@@ -227,10 +232,37 @@ export default {
       this.form = {};
     },
 
-    handleEdit(record) {
+    editButtonClick(record) {
       this.recordEditorVisible = !this.recordEditorVisible;
+      this.selectedRow = record;
       this.isNew = false;
       this.form = record;
+    },
+
+    handleSubmitRecord() {},
+    onAddNewSubmit() {
+      const uuid = this.data.service.toLowerCase() + this.uuid();
+      const encodedItem = {
+        id: uuid,
+        service: this.data.service,
+        email: this.data.email,
+        password: this.$encode(this.data.password, this.userData.passphrase),
+      };
+
+      const tempObj = Object.assign({}, this.localPasswords);
+      tempObj[uuid] = encodedItem;
+
+      this.loading = true;
+      storage.set(
+        'local-passwords',
+        tempObj,
+        (error) => {
+          if (error) throw error;
+          this.loading = false;
+          this.$emit('update:visible', false);
+          this.$store.dispatch('database/GET_PASSWORDS');
+        },
+      );
     },
 
     handleDelete(row) {

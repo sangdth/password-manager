@@ -12,7 +12,7 @@ import i18n from './common/i18n';
 import './plugins/element';
 
 api.init();
-
+console.log('asdfasfddsf fin main.js');
 // change fieldsBagName to avoid conflict with ElementUI
 // read more at https://github.com/ElemeFE/element/issues/4720
 Vue.use(VeeValidate, { fieldsBagName: 'vFields' });

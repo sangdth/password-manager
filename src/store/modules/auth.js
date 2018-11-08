@@ -25,7 +25,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       storage.get('user-data', (error, data) => {
         if (data.passphrase) {
-          console.log(data);
           commit(SET_USER_DATA, data);
           resolve(data);
         } else if (error) {

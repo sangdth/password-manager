@@ -68,15 +68,13 @@ export default {
   created() {
     this.$store.dispatch('auth/GET_USER_DATA')
       .then((data) => {
-        this.firstTime = false;
+        if (data.passphrase) this.firstTime = false;
       });
   },
 
   methods: {
     handleSignIn() {
-      console.log('start submit sign in');
       if (this.firstTime) {
-        console.log('first time use, create new db');
         storage.set(
           'user-data',
           { passphrase: this.form.passphrase },
@@ -94,7 +92,6 @@ export default {
           },
         );
       } else if (this.form.passphrase === this.userData.passphrase) {
-        console.log('passphrase is ok, login...');
         // we need to encode the passphrase in future
         this.$message({
           type: 'success',

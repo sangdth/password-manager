@@ -1,26 +1,26 @@
 <template>
   <el-form
-    :model="data"
+    :model="form"
     :label-position="'right'"
     label-width="80px"
     @keyup.enter.native="submit"
   >
     <el-form-item label="Service">
       <el-input
-        v-model="data.service"
+        v-model="form.service"
         placeholder="Service"
       />
     </el-form-item>
     <el-form-item label="Email">
       <el-input
-        v-model="data.email"
+        v-model="form.email"
         placeholder="Email"
       />
     </el-form-item>
     <el-form-item label="Password">
       <el-input
-        v-model="data.password"
-        type="password"
+        v-model="form.password"
+        type="text"
         placeholder="Password"
       />
     </el-form-item>
@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import storage from 'electron-json-storage';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -46,12 +45,18 @@ export default {
   props: {
     isNew: Boolean,
     visible: Boolean,
-    data: Object,
+    recordId: '',
   },
 
   data() {
     return {
       loading: false,
+      form: {
+        id: '',
+        service: '',
+        email: '',
+        password: '',
+      },
     };
   },
 
@@ -60,46 +65,34 @@ export default {
     ...mapGetters('auth', ['userData']),
   },
 
-  methods: {
-    uuid() {
-      return `-${Math.random().toString(36).substr(2, 9)}`;
-    },
-
-    onSubmit() {
-      if (this.isNew) {
-        this.handleAddNew();
+  watch: {
+    visible() {
+      if (!this.isNew) {
+        this.form = Object.assign({}, this.localPasswords[this.recordId]);
       } else {
-        this.handleUpdate();
+        this.form = {};
       }
     },
+  },
 
-    handleUpdate() {
+  created() {
+    // created hook can not be used because this component was not 
+    // created at the moment, it is lazy loaded, means only create
+    // on demand. (research more about this.
+    if (!this.isNew) {
+      this.form = Object.assign({}, this.localPasswords[this.recordId]);
+    } else {
+      this.form = {};
+    }
+  },
 
-    },
+  mounted() {
+    console.log('asdfafasdfsafasdf');
+  },
 
-    handleAddNew() {
-      const uuid = this.data.service.toLowerCase() + this.uuid();
-      const encodedItem = {
-        id: uuid,
-        service: this.data.service,
-        email: this.data.email,
-        password: this.$encode(this.data.password, this.userData.passphrase),
-      };
-
-      const tempObj = Object.assign({}, this.localPasswords);
-      tempObj[uuid] = encodedItem;
-
-      this.loading = true;
-      storage.set(
-        'local-passwords',
-        tempObj,
-        (error) => {
-          if (error) throw error;
-          this.loading = false;
-          this.$emit('update:visible', false);
-          this.$store.dispatch('database/GET_PASSWORDS');
-        },
-      );
+  methods: {
+    onSubmit() {
+      this.$emit('submit', this.form);
     },
   },
 };
