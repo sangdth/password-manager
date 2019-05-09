@@ -13,7 +13,9 @@
     "dev": "node .electron-vue/dev-runner.js",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
-    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js"
+    "pack:renderer": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.renderer.config.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "build": {
     "productName": "Password Manager",
@@ -63,7 +65,8 @@
     "vue-electron": "^1.0.6",
     "vue-router": "^2.8.1",
     "vuex": "^2.5.0",
-    "xel": "0.0.65"
+    "xel": "0.0.65",
+    "snyk": "^1.163.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.6",
@@ -109,5 +112,6 @@
     "webpack-dev-server": "^2.7.1",
     "webpack-hot-middleware": "^2.22.3",
     "webpack-merge": "^4.1.4"
-  }
+  },
+  "snyk": true
 }
