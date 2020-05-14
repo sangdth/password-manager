@@ -12,7 +12,7 @@
         type="flex"
         justify="center"
       >
-        <el-col :span="12">
+        <!-- el-col :span="12">
           <h5>Sync with Gist</h5>
           <el-form-item label="Access token">
             <el-input
@@ -65,7 +65,7 @@
               Start Sync
             </el-button>
           </el-form-item>
-        </el-col>
+        </el-col -->
         <el-col :span="12">
           <h5>Reset</h5>
           <el-button

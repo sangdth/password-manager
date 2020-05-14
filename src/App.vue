@@ -1,6 +1,5 @@
 <template>
   <el-container>
-    <vue-progress-bar/>
     <el-aside width="64px" class="side-menu">
       <el-menu
         router
