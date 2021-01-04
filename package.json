@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "animate.css": "^3.7.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "electron-json-storage": "^4.1.4",
     "element-ui": "^2.4.5",
     "lodash": "^4.17.19",
