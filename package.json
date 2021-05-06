@@ -19,7 +19,7 @@
     "axios": "^0.18.0",
     "electron-json-storage": "^4.1.4",
     "element-ui": "^2.4.5",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "moment": "^2.25.3",
     "moment-duration-format": "^2.2.2",
     "raven-js": "^3.27.0",
